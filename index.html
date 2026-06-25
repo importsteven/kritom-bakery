@@ -108,6 +108,20 @@ input:focus,textarea:focus,select:focus{border-color:#a0714a}
 .sum-qty{font-weight:700;color:#a0714a;font-size:12px;min-width:90px;text-align:right}
 .board-admin-row{background:rgba(255,255,255,0.9);border-radius:9px;padding:11px 13px;margin-bottom:7px;border:1px solid rgba(200,149,107,0.22);border-left:4px solid #c8956b;display:flex;justify-content:space-between;align-items:flex-start;gap:9px}
 .empty{text-align:center;padding:36px 20px;font-family:sans-serif;color:#a0714a;font-size:14px}
+
+/* route planner */
+.route-card{background:rgba(255,255,255,0.92);border-radius:12px;padding:13px;margin-bottom:10px;border:1px solid rgba(200,149,107,0.24)}
+.route-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
+.route-title{font-family:sans-serif;font-weight:800;font-size:13px;color:#5c3a1e;letter-spacing:.04em}
+.route-pill{background:#a0714a;color:#fff;border-radius:999px;padding:3px 9px;font-family:sans-serif;font-size:12px;font-weight:700;white-space:nowrap}
+.route-stop{border-top:1px solid rgba(200,149,107,.16);padding:9px 0;font-family:sans-serif;color:#5c3a1e}
+.route-stop:first-of-type{border-top:0}
+.route-stop-name{font-weight:800;font-size:13px;margin-bottom:3px}
+.route-stop-meta{font-size:12px;color:#7a5a3a;line-height:1.45}
+.route-items{margin-top:5px;font-size:12px;color:#3a2510;line-height:1.45;background:rgba(160,113,74,.07);border-radius:8px;padding:6px 8px}
+.maps-btn{display:block;text-align:center;text-decoration:none;margin-top:8px;background:#5c3a1e;color:#fff;border-radius:9px;padding:10px 12px;font-family:sans-serif;font-size:13px;font-weight:800}
+.route-note{background:rgba(255,243,224,.85);border:1px solid #e6a020;color:#7a4a00;border-radius:10px;padding:10px 12px;margin-bottom:11px;font-family:sans-serif;font-size:12px;line-height:1.55}
+
 </style>
 </head>
 <body>
@@ -241,10 +255,12 @@ input:focus,textarea:focus,select:focus{border-color:#a0714a}
       <div class="tab-bar">
         <button class="active" onclick="showAdminTab('orders',this)">📋 Rendelések</button>
         <button onclick="showAdminTab('summary',this)">📊 Összesítő</button>
+        <button onclick="showAdminTab('routes',this)">🚚 Túrák</button>
         <button onclick="showAdminTab('board',this)">📌 Üzenőfal</button>
       </div>
       <div id="admin-orders"></div>
       <div id="admin-summary" style="display:none"></div>
+      <div id="admin-routes" style="display:none"></div>
       <div id="admin-board" style="display:none"></div>
     </div>
   </div>
@@ -440,7 +456,7 @@ async function submitOrder() {
     .filter(([,q])=>q>0)
     .map(([key,qty])=>{ const [day,bread,size]=key.split('__'); return {day,bread,size,qty}; });
 
-  orders.push({id:Date.now(), date:new Date().toLocaleDateString("hu-HU"), name, phone, email,
+  orders.push({id:Date.now(), date:new Date().toLocaleString("hu-HU", {year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit"}), name, phone, email,
     address:`${street} ${nr}`, items, week:WI.rangeStr});
   save();
 
@@ -498,7 +514,7 @@ function adminLogin(){
 }
 
 function showAdminTab(tab,btn){
-  ['orders','summary','board'].forEach(t=>document.getElementById('admin-'+t).style.display=t===tab?'block':'none');
+  ['orders','summary','routes','board'].forEach(t=>document.getElementById('admin-'+t).style.display=t===tab?'block':'none');
   document.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderAdmin();
@@ -506,7 +522,7 @@ function showAdminTab(tab,btn){
 
 function renderAdmin(){
   document.getElementById('order-count').textContent=orders.length+' rendelés';
-  renderAdminOrders(); renderAdminSummary(); renderAdminBoard();
+  renderAdminOrders(); renderAdminSummary(); renderAdminRoutes(); renderAdminBoard();
 }
 
 function renderAdminOrders(){
@@ -564,6 +580,112 @@ function renderAdminSummary(){
     html+=`<div class="sum-card"><div style="font-family:sans-serif;font-weight:700;font-size:13px;color:#5c3a1e;margin-bottom:7px">HETI ÖSSZESÍTŐ</div>`
       +wd.map(({b,Kis,Nagy})=>`<div class="sum-row"><span>${esc(b)}</span><span class="sum-qty">${Kis?`kis: ${Kis} `:''}${Nagy?`nagy: ${Nagy}`:''}</span></div>`).join('')+'</div>';
   }
+  el.innerHTML=html;
+}
+
+
+const DEPOT_ADDRESS = "Kaszala Károly utca 17, Dunaharaszti";
+const ROUTE_CAPACITY = 6;
+
+function routeProductCount(items){
+  return items.reduce((a,i)=>a+(Number(i.qty)||0),0);
+}
+
+function routeItemText(items){
+  return items.map(i=>`${esc(i.bread)} <span style="color:#7a5a3a">(${esc(i.size)})</span>: <strong>${i.qty} db</strong>`).join('<br>');
+}
+
+function streetRank(address){
+  const a = String(address||'').toLowerCase();
+  let best = 9999;
+  STREETS.forEach((st,idx)=>{
+    if(a.includes(st.toLowerCase())) best = Math.min(best, idx);
+  });
+  return best;
+}
+
+function buildDailyDeliveries(dayKey){
+  const rows=[];
+  orders.forEach(o=>{
+    const dayItems = (o.items||[]).filter(i=>i.day===dayKey && i.qty>0);
+    if(!dayItems.length) return;
+    rows.push({
+      orderId:o.id,
+      name:o.name,
+      phone:o.phone,
+      address:o.address||'',
+      email:o.email,
+      items:dayItems,
+      count:routeProductCount(dayItems),
+      rank:streetRank(o.address||'')
+    });
+  });
+  rows.sort((a,b)=>a.rank-b.rank || String(a.address).localeCompare(String(b.address),'hu') || String(a.name).localeCompare(String(b.name),'hu'));
+  return rows;
+}
+
+function splitDeliveriesIntoTrips(deliveries){
+  const trips=[];
+  let current=[];
+  let load=0;
+
+  deliveries.forEach(d=>{
+    let remainingItems = d.items.map(i=>({...i}));
+    while(remainingItems.length){
+      let chunk=[];
+      let chunkCount=0;
+      while(remainingItems.length && chunkCount < ROUTE_CAPACITY){
+        const i = remainingItems[0];
+        const take = Math.min(i.qty, ROUTE_CAPACITY - chunkCount);
+        chunk.push({...i, qty:take});
+        chunkCount += take;
+        i.qty -= take;
+        if(i.qty<=0) remainingItems.shift();
+      }
+      const part = {...d, items:chunk, count:chunkCount};
+      if(load + part.count > ROUTE_CAPACITY && current.length){
+        trips.push({stops:current, load});
+        current=[]; load=0;
+      }
+      current.push(part);
+      load += part.count;
+      if(load >= ROUTE_CAPACITY){
+        trips.push({stops:current, load});
+        current=[]; load=0;
+      }
+    }
+  });
+  if(current.length) trips.push({stops:current, load});
+  return trips;
+}
+
+function mapsUrlForTrip(trip){
+  const enc = encodeURIComponent;
+  const stops = trip.stops.map(s=>`${s.address}, Dunaharaszti`).filter(Boolean);
+  // A böngészős Google Maps a tényleges vezetési útvonalat számolja ki. A sorrendet itt adjuk át; ha szükséges, a sofőr a Mapsben kézzel finomíthatja.
+  return `https://www.google.com/maps/dir/?api=1&origin=${enc(DEPOT_ADDRESS)}&destination=${enc(DEPOT_ADDRESS)}&travelmode=driving&waypoints=${enc(stops.join('|'))}`;
+}
+
+function renderAdminRoutes(){
+  const el=document.getElementById('admin-routes'); if(!el)return;
+  const any = orders.some(o=>(o.items||[]).length);
+  if(!any){el.innerHTML='<div class="empty">Még nincs útvonalhoz rendelés</div>';return;}
+
+  let html=`<div class="route-note"><strong>Kiindulás és visszaérkezés:</strong> ${esc(DEPOT_ADDRESS)}<br><strong>Kapacitás:</strong> egy körben maximum ${ROUTE_CAPACITY} termék. A körök címek szerint rendezve készülnek, a pontos vezetési útvonalat a Google Maps gomb számolja ki.</div>`;
+  DAY_KEYS.forEach((dk,di)=>{
+    const deliveries = buildDailyDeliveries(dk);
+    if(!deliveries.length) return;
+    const trips = splitDeliveriesIntoTrips(deliveries);
+    const dayTotal = deliveries.reduce((a,d)=>a+d.count,0);
+    html += `<div class="sum-card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span style="font-family:sans-serif;font-weight:800;font-size:13px;color:#5c3a1e">${DAYS[di].toUpperCase()}</span><span class="route-pill">${trips.length} kör · ${dayTotal} db</span></div></div>`;
+    trips.forEach((trip,idx)=>{
+      html += `<div class="route-card"><div class="route-head"><div class="route-title">${idx+1}. KÖR</div><div class="route-pill">${trip.load}/${ROUTE_CAPACITY} db</div></div>`;
+      trip.stops.forEach((s,si)=>{
+        html += `<div class="route-stop"><div class="route-stop-name">${si+1}. ${esc(s.name)}</div><div class="route-stop-meta">📍 ${esc(s.address)}, Dunaharaszti<br>☎ ${esc(s.phone||'–')}</div><div class="route-items">${routeItemText(s.items)}</div></div>`;
+      });
+      html += `<a class="maps-btn" target="_blank" rel="noopener" href="${mapsUrlForTrip(trip)}">Megnyitás Google Mapsben →</a></div>`;
+    });
+  });
   el.innerHTML=html;
 }
 
