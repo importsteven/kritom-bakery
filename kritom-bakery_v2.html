@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KRITOM BAKERY – Rendelés</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/browser/emailjs.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:linear-gradient(160deg,#fdf6ee 0%,#f5e9d6 50%,#ede0c8 100%);font-family:Georgia,serif;padding-bottom:60px}
+.wrap{max-width:480px;margin:0 auto;position:relative;z-index:1}
+.bg-decor{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;overflow:hidden}
+
+header{background:rgba(255,255,255,0.88);backdrop-filter:blur(8px);border-bottom:1px solid rgba(200,149,107,0.3);padding:18px 24px 14px;text-align:center;position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.logo-name{font-size:26px;font-weight:700;letter-spacing:.04em;color:#5c3a1e;line-height:1}
+.logo-sub{font-size:11px;letter-spacing:.25em;color:#a0714a;text-transform:uppercase;font-family:sans-serif;font-weight:600}
+.nav{display:flex;gap:8px;justify-content:center}
+.nav button{padding:7px 18px;border-radius:20px;border:1.5px solid #ddd;background:transparent;color:#7a5a3a;font-family:sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.nav button.active{border:2px solid #a0714a;background:#a0714a;color:#fff}
+
+.page{display:none;padding:20px 16px}
+.page.active{display:block}
+
+/* info box */
+.info-box{background:rgba(255,255,255,0.75);border-radius:12px;padding:13px 16px;margin-bottom:14px;border:1px solid rgba(200,149,107,0.25);font-family:sans-serif;font-size:13px;color:#7a5a3a;line-height:1.7}
+.week-range{background:rgba(160,113,74,0.12);border:1.5px solid rgba(160,113,74,0.35);border-radius:10px;padding:9px 14px;margin-top:8px;font-family:sans-serif;font-size:13px;color:#5c3a1e;font-weight:600;text-align:center}
+
+/* üzenőfal */
+.board-section{margin-bottom:14px}
+.board-divider{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.board-divider-line{flex:1;height:1px;background:rgba(160,113,74,0.25)}
+.board-title{font-family:Georgia,serif;font-size:14px;font-weight:700;color:#a0714a;letter-spacing:.05em;white-space:nowrap}
+.board-msg{background:rgba(255,255,255,0.82);border-radius:10px;padding:12px 14px;margin-bottom:8px;border:1px solid rgba(200,149,107,0.25);border-left:4px solid #c8956b}
+.board-msg-text{font-family:sans-serif;font-size:13px;color:#3a2510;line-height:1.6;white-space:pre-wrap}
+.board-msg-date{font-family:sans-serif;font-size:11px;color:#b09070;margin-top:5px}
+
+/* card */
+.card{background:rgba(255,255,255,0.82);border-radius:14px;padding:16px;margin-bottom:12px;border:1px solid rgba(200,149,107,0.25)}
+.card-title{font-family:sans-serif;font-weight:700;font-size:13px;color:#5c3a1e;margin-bottom:12px;letter-spacing:.04em}
+
+/* form */
+label.field-label{display:block;font-family:sans-serif;font-size:11px;color:#a0714a;margin-bottom:5px;font-weight:600;letter-spacing:.05em}
+input[type=text],input[type=tel],input[type=email],input[type=password],textarea,select{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid rgba(160,113,74,0.35);background:rgba(255,255,255,0.92);font-family:sans-serif;font-size:14px;color:#3a2510;outline:none;transition:border-color .15s}
+input:focus,textarea:focus,select:focus{border-color:#a0714a}
+.field{margin-bottom:11px}
+.err-text{color:#e24b4a;font-size:12px;font-family:sans-serif;margin-top:3px}
+input.has-error{border-color:#e24b4a}
+
+/* collapsible day */
+.day-block{background:rgba(255,255,255,0.82);border-radius:14px;margin-bottom:10px;border:1px solid rgba(200,149,107,0.25);overflow:hidden}
+.day-toggle{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;user-select:none;transition:background .15s}
+.day-toggle:hover{background:rgba(160,113,74,0.06)}
+.day-toggle.open{background:rgba(160,113,74,0.08)}
+.day-left{display:flex;flex-direction:column;gap:2px}
+.day-name{font-family:sans-serif;font-weight:700;font-size:14px;color:#5c3a1e;letter-spacing:.03em}
+.day-date{font-family:sans-serif;font-size:12px;color:#a0714a}
+.day-right{display:flex;align-items:center;gap:10px}
+.day-badge{background:#a0714a;color:#fff;border-radius:10px;padding:2px 9px;font-family:sans-serif;font-size:12px;font-weight:700;display:none}
+.day-badge.visible{display:inline-block}
+.day-arrow{font-size:16px;color:#a0714a;transition:transform .25s;line-height:1}
+.day-toggle.open .day-arrow{transform:rotate(180deg)}
+.day-body{display:none;padding:0 14px 14px}
+.day-body.open{display:block}
+
+/* bread row – kis/nagy */
+.bread-row{display:flex;align-items:center;padding:8px 0;border-bottom:.5px solid rgba(200,149,107,0.12)}
+.bread-row:last-child{border-bottom:none}
+.bread-label{font-family:sans-serif;font-size:14px;color:#5c3a1e;flex:1;min-width:0;padding-right:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.size-group{display:flex;align-items:center;gap:6px}
+.size-label{font-family:sans-serif;font-size:10px;font-weight:700;color:#a0714a;letter-spacing:.05em;min-width:22px;text-align:right}
+.qty-btn{width:26px;height:26px;border-radius:13px;border:1.5px solid rgba(160,113,74,0.45);background:transparent;color:#c8956b;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s;flex-shrink:0;padding:0}
+.qty-btn.has-qty{background:#a0714a;color:#fff;border-color:#a0714a}
+.qty-num{font-family:sans-serif;font-size:13px;font-weight:700;color:#5c3a1e;min-width:14px;text-align:center}
+.size-sep{width:1px;height:20px;background:rgba(200,149,107,0.3);margin:0 4px}
+
+/* totals */
+.total-bar{background:rgba(92,58,30,0.06);border-radius:12px;padding:10px 16px;margin-bottom:12px;font-family:sans-serif;font-size:13px;color:#5c3a1e;text-align:center;border:1px solid rgba(160,113,74,0.18)}
+.submit-btn{width:100%;padding:15px;background:linear-gradient(135deg,#a0714a,#7a5030);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;font-family:sans-serif;cursor:pointer;letter-spacing:.04em;box-shadow:0 4px 16px rgba(120,80,40,0.25)}
+.submit-btn:disabled{background:#c8a07a;cursor:not-allowed}
+
+.alert{border-radius:12px;padding:12px 16px;margin-bottom:14px;font-family:sans-serif;font-size:13px;text-align:center}
+.alert-warn{background:#fff3e0;border:1.5px solid #e6a020;color:#b06000}
+.alert-success{background:#eafaf1;border:1px solid #a8d5b5;color:#1e6b36}
+.alert-err-soft{background:#fff3e0;border:1px solid #e6a020;color:#b06000}
+
+/* thank you */
+.thank-you{text-align:center;padding:40px 20px}
+.thank-you .big-emoji{font-size:56px;margin-bottom:16px}
+.thank-you h2{font-size:22px;font-weight:700;color:#5c3a1e;margin-bottom:8px}
+.thank-you p{color:#7a5a3a;font-family:sans-serif;font-size:14px;line-height:1.6;margin-bottom:24px}
+.new-order-btn{background:#a0714a;color:#fff;border:none;border-radius:24px;padding:12px 28px;font-size:14px;font-weight:600;font-family:sans-serif;cursor:pointer}
+
+/* admin */
+.admin-login-card{background:rgba(255,255,255,0.88);border-radius:16px;padding:32px 24px;text-align:center;border:1px solid rgba(200,149,107,0.3)}
+.admin-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.admin-badge{background:#d4edda;color:#1e6b36;padding:4px 12px;border-radius:20px;font-family:sans-serif;font-size:12px;font-weight:600}
+.tab-bar{display:flex;gap:7px;margin-bottom:16px}
+.tab-bar button{flex:1;padding:9px 4px;border-radius:10px;border:1.5px solid #ddd;background:transparent;color:#7a5a3a;font-family:sans-serif;font-size:12px;font-weight:600;cursor:pointer}
+.tab-bar button.active{border:2px solid #a0714a;background:#a0714a;color:#fff}
+.summary-total{background:rgba(255,255,255,0.75);border-radius:10px;padding:11px 14px;margin-bottom:12px;font-family:sans-serif;font-size:13px;color:#7a5a3a;border:1px solid rgba(200,149,107,0.2)}
+.summary-card{background:rgba(255,255,255,0.88);border-radius:12px;padding:13px 14px;margin-bottom:10px;border:1px solid rgba(200,149,107,0.25)}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:.5px solid rgba(200,149,107,0.13);font-family:sans-serif;font-size:13px;color:#5c3a1e}
+.summary-row:last-child{border-bottom:none}
+.summary-qty{font-weight:700;color:#a0714a;min-width:44px;text-align:right}
+.order-card{background:rgba(255,255,255,0.88);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid rgba(200,149,107,0.25)}
+.delete-btn{background:#fee;border:1px solid #fcc;color:#e24b4a;border-radius:8px;padding:5px 9px;font-size:12px;font-family:sans-serif;cursor:pointer;flex-shrink:0}
+.sec-btn{width:100%;padding:11px;background:#a0714a;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;font-family:sans-serif;cursor:pointer;margin-top:10px}
+.empty{text-align:center;padding:36px 20px;font-family:sans-serif;color:#a0714a;font-size:14px}
+.board-admin-row{background:rgba(255,255,255,0.88);border-radius:10px;padding:12px 14px;margin-bottom:8px;border:1px solid rgba(200,149,107,0.25);border-left:4px solid #c8956b;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <svg style="position:absolute;top:-20px;left:-20px;opacity:.09" width="120" height="180" viewBox="0 0 120 180">
+    <line x1="60" y1="170" x2="60" y2="20" stroke="#8B5E3C" stroke-width="2"/>
+    <ellipse cx="46" cy="30" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,30)"/><ellipse cx="74" cy="30" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,30)"/>
+    <ellipse cx="46" cy="55" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,55)"/><ellipse cx="74" cy="55" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,55)"/>
+    <ellipse cx="46" cy="80" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,80)"/><ellipse cx="74" cy="80" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,80)"/>
+    <ellipse cx="46" cy="105" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,105)"/><ellipse cx="74" cy="105" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,105)"/>
+    <ellipse cx="46" cy="130" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,130)"/><ellipse cx="74" cy="130" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,130)"/>
+    <ellipse cx="46" cy="155" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,155)"/><ellipse cx="74" cy="155" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,155)"/>
+  </svg>
+  <svg style="position:absolute;top:40px;right:-10px;opacity:.09;transform:scaleX(-1)" width="120" height="180" viewBox="0 0 120 180">
+    <line x1="60" y1="170" x2="60" y2="20" stroke="#8B5E3C" stroke-width="2"/>
+    <ellipse cx="46" cy="30" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,30)"/><ellipse cx="74" cy="30" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,30)"/>
+    <ellipse cx="46" cy="60" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,60)"/><ellipse cx="74" cy="60" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,60)"/>
+    <ellipse cx="46" cy="90" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,90)"/><ellipse cx="74" cy="90" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,90)"/>
+    <ellipse cx="46" cy="120" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,120)"/><ellipse cx="74" cy="120" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,120)"/>
+    <ellipse cx="46" cy="150" rx="12" ry="7" fill="#8B5E3C" transform="rotate(-20,46,150)"/><ellipse cx="74" cy="150" rx="12" ry="7" fill="#8B5E3C" transform="rotate(20,74,150)"/>
+  </svg>
+  <svg style="position:absolute;bottom:0;left:0;width:100%" viewBox="0 0 400 60" preserveAspectRatio="none">
+    <path d="M0 40 Q50 20 100 35 Q150 50 200 30 Q250 10 300 38 Q350 55 400 32 L400 60 L0 60Z" fill="#c8956b" opacity=".12"/>
+    <path d="M0 52 Q80 38 160 50 Q240 62 320 44 Q370 36 400 50 L400 60 L0 60Z" fill="#a0714a" opacity=".10"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="logo">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <ellipse cx="16" cy="18" rx="13" ry="8" fill="#c8956b" opacity=".9"/>
+        <ellipse cx="16" cy="14" rx="11" ry="7" fill="#d4a06a"/>
+        <path d="M5 14 Q8 8 16 8 Q24 8 27 14" stroke="#b87d4a" stroke-width="1.2" fill="none"/>
+        <path d="M9 11 Q10 9 12 10" stroke="#b87d4a" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M16 9 Q17 7 19 8" stroke="#b87d4a" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M22 11 Q23 9 24 10.5" stroke="#b87d4a" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="logo-name">KRITOM</div>
+        <div class="logo-sub">BAKERY</div>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="active" onclick="showPage('order',this)">🛒 Rendelés</button>
+      <button onclick="showPage('admin',this)">⚙ Admin</button>
+    </div>
+  </header>
+
+  <!-- ORDER PAGE -->
+  <div id="page-order" class="page active">
+
+    <div id="ordering-closed" class="alert alert-warn" style="display:none">
+      <strong>⏰ Rendelési idő lezárva</strong><br>
+      <span style="font-size:13px">A következő rendelési határidő szombat 15:00.</span>
+    </div>
+
+    <div id="thank-you" style="display:none">
+      <div class="thank-you">
+        <div class="big-emoji">🍞</div>
+        <h2>Köszönjük a rendelést!</h2>
+        <div id="email-ok" class="alert alert-success" style="display:none;margin-bottom:14px">✉️ Visszaigazoló emailt küldtünk a megadott címre.</div>
+        <div id="email-err" class="alert alert-err-soft" style="display:none;margin-bottom:14px">⚠️ Rendelésed megkaptuk, de az email küldés nem sikerült.</div>
+        <p>Szállítás napján 19:00-tól 🚚</p>
+        <button class="new-order-btn" onclick="resetOrder()">Új rendelés</button>
+      </div>
+    </div>
+
+    <div id="order-form">
+      <!-- Info + rendelési intervallum -->
+      <div class="info-box">
+        📅 <strong>Következő heti rendelés</strong><br>
+        Leadási határidő: szombat 15:00 · Szállítás aznap 19:00-tól
+        <div class="week-range" id="week-range-display">🗓 Betöltés...</div>
+      </div>
+
+      <!-- Üzenőfal -->
+      <div id="board-public" class="board-section" style="display:none"></div>
+
+      <!-- Adataid -->
+      <div class="card">
+        <div class="card-title">ADATAID</div>
+        <div class="field">
+          <label class="field-label">TELJES NEVED</label>
+          <input type="text" id="f-name" placeholder="pl. Kiss Anna">
+          <div class="err-text" id="err-name" style="display:none">Kérjük add meg a neved!</div>
+        </div>
+        <div class="field">
+          <label class="field-label">TELEFONSZÁM</label>
+          <input type="tel" id="f-phone" placeholder="pl. +36 20 123 4567">
+          <div class="err-text" id="err-phone" style="display:none">Kérjük add meg a telefonszámot!</div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label class="field-label">E-MAIL CÍM</label>
+          <input type="email" id="f-email" placeholder="pl. anna@email.com">
+          <div class="err-text" id="err-email" style="display:none">Érvényes email szükséges!</div>
+        </div>
+      </div>
+
+      <!-- Napok (lenyitható) -->
+      <div id="day-blocks"></div>
+
+      <div class="err-text" id="err-items" style="display:none;text-align:center;margin-bottom:10px;font-weight:600">Legalább egy pékárut kell rendelni!</div>
+      <div class="total-bar" id="total-bar" style="display:none">Összesen: <strong id="total-num">0</strong> db kiválasztva</div>
+      <button class="submit-btn" id="submit-btn" onclick="submitOrder()">RENDELÉS LEADÁSA →</button>
+    </div>
+  </div>
+
+  <!-- ADMIN PAGE -->
+  <div id="page-admin" class="page">
+    <div id="admin-login">
+      <div class="admin-login-card">
+        <div style="font-size:42px;margin-bottom:12px">🔐</div>
+        <div style="font-family:sans-serif;font-weight:700;font-size:16px;color:#5c3a1e;margin-bottom:20px">Admin belépés</div>
+        <input type="password" id="admin-pw" placeholder="Jelszó" onkeydown="if(event.key==='Enter')adminLogin()">
+        <div class="err-text" id="admin-pw-err" style="display:none;margin:6px 0">Hibás jelszó</div>
+        <button class="sec-btn" onclick="adminLogin()">Belépés</button>
+      </div>
+    </div>
+    <div id="admin-panel" style="display:none">
+      <div class="admin-topbar">
+        <span style="font-family:sans-serif;font-weight:700;font-size:15px;color:#5c3a1e">Admin panel</span>
+        <span class="admin-badge" id="order-count">0 rendelés</span>
+      </div>
+      <div class="tab-bar">
+        <button class="active" onclick="showAdminTab('orders',this)">📋 Rendelések</button>
+        <button onclick="showAdminTab('summary',this)">📊 Összesítő</button>
+        <button onclick="showAdminTab('board',this)">📌 Üzenőfal</button>
+      </div>
+      <div id="admin-orders"></div>
+      <div id="admin-summary" style="display:none"></div>
+      <div id="admin-board" style="display:none"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── EmailJS – cseréld ki ──
+const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
+
+const BREADS   = ["Diós","Sima","Olivás","Quinoa","Köleses","Hajdinás","Chilis sajt","Céklás sajt","Füstölt sajt","Sokmagvas","Cheddar sajt","Chia magos","Fokhagymás","Áfonyás diós","Pirított hagymás","Fokhagymás sajt","Fekete szezámos","Aszalt paradicsomos","Kiskalács","Nagykalács"];
+const DAYS     = ["Hétfő","Kedd","Szerda","Csütörtök","Péntek","Szombat"];
+const DAY_KEYS = ["hetfo","kedd","szerda","csutortok","pentek","szombat"];
+const ADMIN_PW = "kritom2024";
+const SIZES    = ["Kis","Nagy"];
+
+let orders     = JSON.parse(localStorage.getItem("kritom_orders")   || "[]");
+let messages   = JSON.parse(localStorage.getItem("kritom_messages")  || "[]");
+// selections: key = "dayKey__bread__size" => qty
+let selections = {};
+
+function save() {
+  localStorage.setItem("kritom_orders",   JSON.stringify(orders));
+  localStorage.setItem("kritom_messages", JSON.stringify(messages));
+}
+
+// ── Week range calculation ──
+function getOrderingWeekInfo() {
+  const now    = new Date();
+  const dow    = now.getDay(); // 0=Sun,6=Sat
+  const hour   = now.getHours();
+  const min    = now.getMinutes();
+
+  // Cutoff: Saturday 15:30
+  const pastCutoff = (dow === 6 && (hour > 15 || (hour === 15 && min >= 30))) || dow === 0;
+
+  // Find the upcoming Monday
+  let daysToMon;
+  if (pastCutoff) {
+    // next week's Monday
+    daysToMon = dow === 0 ? 8 : (8 - dow) % 7 + 7;
+    // simpler: always jump to the Monday after next Sunday
+    daysToMon = (8 - dow) % 7;
+    if (daysToMon === 0) daysToMon = 7;
+    // if we're past cutoff on Saturday, add 7 more
+    if (dow === 6) daysToMon = 9 - dow + 7 - 7; // next next Monday
+    // let's just be explicit:
+    if (dow === 6) daysToMon = 8;
+    if (dow === 0) daysToMon = 8;
+  } else {
+    daysToMon = dow === 1 ? 0 : (8 - dow) % 7;
+    if (daysToMon === 0 && dow !== 1) daysToMon = 7;
+    // If today is Mon-Sat before cutoff, next Monday
+    if (dow === 1) daysToMon = 0; // this week's Monday (today)
+    daysToMon = (dow === 0) ? 1 : (8 - dow) % 7;
+    if (daysToMon === 7) daysToMon = 0;
+  }
+
+  // Recalculate cleanly
+  let monday = new Date(now);
+  if (!pastCutoff) {
+    // current week's Monday
+    const d = now.getDay(); // 0=Sun
+    const diff = d === 0 ? -6 : 1 - d;
+    monday.setDate(now.getDate() + diff);
+  } else {
+    // next week's Monday
+    const d = now.getDay();
+    const diff = d === 0 ? 1 : 8 - d;
+    monday.setDate(now.getDate() + diff);
+  }
+  monday.setHours(0,0,0,0);
+
+  const saturday = new Date(monday);
+  saturday.setDate(monday.getDate() + 5);
+
+  const fmt = (d) => d.toLocaleDateString("hu-HU", {month:"long", day:"numeric"});
+
+  const weekDates = DAY_KEYS.map((_,i) => {
+    const dd = new Date(monday);
+    dd.setDate(monday.getDate() + i);
+    return dd.toLocaleDateString("hu-HU", {month:"long", day:"numeric"});
+  });
+
+  return { rangeText: `🗓 ${fmt(monday)} – ${fmt(saturday)}`, weekDates, pastCutoff };
+}
+
+const { rangeText, weekDates, pastCutoff } = getOrderingWeekInfo();
+document.getElementById('week-range-display').textContent = rangeText;
+if (pastCutoff) document.getElementById('ordering-closed').style.display = 'block';
+
+// ── Nav ──
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Day blocks ──
+function buildDayBlocks() {
+  const container = document.getElementById('day-blocks');
+  container.innerHTML = '';
+  DAY_KEYS.forEach((dk, di) => {
+    const block = document.createElement('div');
+    block.className = 'day-block';
+    block.innerHTML = `
+      <div class="day-toggle" id="toggle-${dk}" onclick="toggleDay('${dk}')">
+        <div class="day-left">
+          <span class="day-name">${DAYS[di].toUpperCase()}</span>
+          <span class="day-date">${weekDates[di]}</span>
+        </div>
+        <div class="day-right">
+          <span class="day-badge" id="badge-${dk}"></span>
+          <span class="day-arrow">▾</span>
+        </div>
+      </div>
+      <div class="day-body" id="body-${dk}">
+        ${BREADS.map(bread => `
+          <div class="bread-row">
+            <span class="bread-label" title="${bread}">${bread}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="size-group">
+                <span class="size-label">KIS</span>
+                <button class="qty-btn" id="btn-m-${dk}-${bread}-Kis" onclick="updateQty('${dk}','${bread}','Kis',-1)">−</button>
+                <span class="qty-num" id="qty-${dk}-${bread}-Kis">0</span>
+                <button class="qty-btn has-qty" onclick="updateQty('${dk}','${bread}','Kis',1)">+</button>
+              </div>
+              <div class="size-sep"></div>
+              <div class="size-group">
+                <span class="size-label">NAGY</span>
+                <button class="qty-btn" id="btn-m-${dk}-${bread}-Nagy" onclick="updateQty('${dk}','${bread}','Nagy',-1)">−</button>
+                <span class="qty-num" id="qty-${dk}-${bread}-Nagy">0</span>
+                <button class="qty-btn has-qty" onclick="updateQty('${dk}','${bread}','Nagy',1)">+</button>
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>`;
+    container.appendChild(block);
+  });
+}
+
+function toggleDay(dk) {
+  const toggle = document.getElementById('toggle-'+dk);
+  const body   = document.getElementById('body-'+dk);
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+function updateQty(day, bread, size, delta) {
+  const key = `${day}__${bread}__${size}`;
+  selections[key] = Math.max(0, (selections[key] || 0) + delta);
+  if (selections[key] === 0) delete selections[key];
+  const qty = selections[key] || 0;
+
+  document.getElementById(`qty-${day}-${bread}-${size}`).textContent = qty;
+  const minusBtn = document.getElementById(`btn-m-${day}-${bread}-${size}`);
+  if (minusBtn) qty > 0 ? minusBtn.classList.add('has-qty') : minusBtn.classList.remove('has-qty');
+
+  // update badge on day header
+  const dayTotal = Object.entries(selections)
+    .filter(([k]) => k.startsWith(day+'__'))
+    .reduce((a,[,v]) => a+v, 0);
+  const badge = document.getElementById('badge-'+day);
+  if (dayTotal > 0) { badge.textContent = dayTotal+' db'; badge.classList.add('visible'); }
+  else { badge.textContent=''; badge.classList.remove('visible'); }
+
+  updateTotal();
+}
+
+function updateTotal() {
+  const total = Object.values(selections).reduce((a,b)=>a+b, 0);
+  const bar = document.getElementById('total-bar');
+  if (total > 0) { bar.style.display='block'; document.getElementById('total-num').textContent=total; }
+  else bar.style.display='none';
+}
+
+// ── Submit ──
+async function submitOrder() {
+  let ok = true;
+  const name  = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const show  = (id, v) => document.getElementById(id).style.display = v ? 'block' : 'none';
+
+  show('err-name',  !name);  if (!name)  ok=false;
+  show('err-phone', !phone); if (!phone) ok=false;
+  show('err-email', !email || !email.includes('@')); if (!email || !email.includes('@')) ok=false;
+  const hasItems = Object.values(selections).some(v=>v>0);
+  show('err-items', !hasItems); if (!hasItems) ok=false;
+  if (!ok) return;
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled=true; btn.textContent='Küldés...';
+
+  const items = Object.entries(selections)
+    .filter(([,q])=>q>0)
+    .map(([key,qty])=>{ const [day,bread,size]=key.split('__'); return {day,bread,size,qty}; });
+
+  orders.push({ id:Date.now(), date:new Date().toLocaleDateString("hu-HU"), name, phone, email, items, week:weekDates[0] });
+  save();
+
+  // email
+  let emailOk = false;
+  if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+    try {
+      emailjs.init({publicKey: EMAILJS_PUBLIC_KEY});
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        to_name: name, to_email: email,
+        order_summary: buildSummaryText(items)
+      });
+      emailOk = true;
+    } catch(e) {}
+  }
+
+  document.getElementById('order-form').style.display='none';
+  document.getElementById('thank-you').style.display='block';
+  if (emailOk) show('email-ok', true);
+  else if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") show('email-err', true);
+}
+
+function buildSummaryText(items) {
+  const byDay = {};
+  items.forEach(i => {
+    if (!byDay[i.day]) byDay[i.day]=[];
+    byDay[i.day].push(`${i.bread} (${i.size}): ${i.qty} db`);
+  });
+  return DAY_KEYS.map((dk,di) => byDay[dk] ? `${DAYS[di]}: ${byDay[dk].join(', ')}` : null).filter(Boolean).join('\n');
+}
+
+function resetOrder() {
+  selections = {};
+  ['f-name','f-phone','f-email'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('order-form').style.display='block';
+  document.getElementById('thank-you').style.display='none';
+  document.getElementById('email-ok').style.display='none';
+  document.getElementById('email-err').style.display='none';
+  const btn=document.getElementById('submit-btn');
+  btn.disabled=false; btn.textContent='RENDELÉS LEADÁSA →';
+  buildDayBlocks();
+  updateTotal();
+}
+
+// ── Üzenőfal (public) ──
+function renderBoard() {
+  const el = document.getElementById('board-public');
+  if (messages.length === 0) { el.style.display='none'; return; }
+  el.style.display = 'block';
+  el.innerHTML = `<div class="board-divider"><div class="board-divider-line"></div><div class="board-title">📌 Üzenőfal</div><div class="board-divider-line"></div></div>`
+    + messages.map(m=>`<div class="board-msg"><div class="board-msg-text">${escHtml(m.text)}</div><div class="board-msg-date">${m.date}</div></div>`).join('');
+}
+
+function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── Admin ──
+function adminLogin() {
+  if (document.getElementById('admin-pw').value === ADMIN_PW) {
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    renderAdmin();
+  } else {
+    document.getElementById('admin-pw-err').style.display='block';
+  }
+}
+
+function showAdminTab(tab, btn) {
+  ['orders','summary','board'].forEach(t => {
+    document.getElementById('admin-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAdmin();
+}
+
+function renderAdmin() {
+  document.getElementById('order-count').textContent = orders.length + ' rendelés';
+  renderAdminOrders();
+  renderAdminSummary();
+  renderAdminBoard();
+}
+
+function renderAdminOrders() {
+  const el = document.getElementById('admin-orders');
+  if (!el) return;
+  const filterVal = document.getElementById('filter-day')?.value || 'all';
+  const filtered  = filterVal==='all' ? orders : orders.filter(o=>o.items.some(i=>i.day===filterVal));
+
+  const selHtml = `<div style="margin-bottom:12px"><select id="filter-day" onchange="renderAdminOrders()" style="width:100%;padding:9px 14px;border-radius:9px;border:1.5px solid rgba(160,113,74,.35);font-family:sans-serif;font-size:13px;background:rgba(255,255,255,.9);color:#5c3a1e">
+    <option value="all">Összes nap</option>
+    ${DAY_KEYS.map((k,i)=>`<option value="${k}"${k===filterVal?' selected':''}>${DAYS[i]}</option>`).join('')}
+  </select></div>`;
+
+  if (filtered.length===0) { el.innerHTML=selHtml+'<div class="empty">Még nincs leadott rendelés</div>'; return; }
+
+  el.innerHTML = selHtml + filtered.map(o => {
+    const itemsHtml = DAY_KEYS.map((dk,di) => {
+      const dayItems = o.items.filter(i=>i.day===dk);
+      if (!dayItems.length) return '';
+      return `<div style="font-family:sans-serif;font-size:11px;font-weight:700;color:#a0714a;letter-spacing:.06em;margin:6px 0 3px">${DAYS[di].toUpperCase()}</div>`
+        + dayItems.map(i=>`<div style="display:flex;justify-content:space-between;font-family:sans-serif;font-size:13px;color:#5c3a1e;padding:2px 0"><span>${escHtml(i.bread)} <span style="color:#a0714a;font-size:11px">(${i.size})</span></span><span style="font-weight:700">${i.qty} db</span></div>`).join('');
+    }).join('');
+    return `<div class="order-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div>
+          <div style="font-family:sans-serif;font-weight:700;font-size:15px;color:#5c3a1e">${escHtml(o.name)}</div>
+          <div style="font-family:sans-serif;font-size:12px;color:#a0714a;margin-top:2px">${escHtml(o.phone)} · ${escHtml(o.email)}</div>
+          <div style="font-family:sans-serif;font-size:11px;color:#bbb;margin-top:2px">Leadva: ${o.date}</div>
+        </div>
+        <button class="delete-btn" onclick="deleteOrder(${o.id})">Törlés</button>
+      </div>
+      <div style="border-top:1px solid rgba(200,149,107,.2);padding-top:8px">${itemsHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function deleteOrder(id) {
+  orders = orders.filter(o=>o.id!==id);
+  save(); renderAdmin();
+}
+
+function renderAdminSummary() {
+  const el = document.getElementById('admin-summary');
+  if (!el) return;
+  const totalAll = orders.reduce((a,o)=>a+o.items.reduce((b,i)=>b+i.qty,0),0);
+
+  // byDay[dk][bread][size] = qty
+  const byDay={};
+  DAY_KEYS.forEach(dk=>{ byDay[dk]={}; BREADS.forEach(b=>{ byDay[dk][b]={Kis:0,Nagy:0}; }); });
+  orders.forEach(o=>o.items.forEach(i=>{ if(byDay[i.day]&&byDay[i.day][i.bread]) byDay[i.day][i.bread][i.size]=(byDay[i.day][i.bread][i.size]||0)+i.qty; }));
+
+  const totalByBread={};
+  BREADS.forEach(b=>{ totalByBread[b]={Kis:0,Nagy:0}; });
+  orders.forEach(o=>o.items.forEach(i=>{ totalByBread[i.bread][i.size]=(totalByBread[i.bread][i.size]||0)+i.qty; }));
+
+  let html = `<div class="summary-total">Összesen leadott: <strong>${totalAll} db</strong></div>`;
+
+  DAY_KEYS.forEach((dk,di)=>{
+    const dayData = BREADS.map(b=>({bread:b,...byDay[dk][b]})).filter(x=>x.Kis>0||x.Nagy>0);
+    if (!dayData.length) return;
+    const dayTotal = dayData.reduce((a,x)=>a+x.Kis+x.Nagy,0);
+    html += `<div class="summary-card">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="font-family:sans-serif;font-weight:700;font-size:14px;color:#5c3a1e">${DAYS[di].toUpperCase()}</span>
+        <span style="background:#a0714a;color:#fff;border-radius:10px;padding:2px 9px;font-family:sans-serif;font-size:12px;font-weight:700">${dayTotal} db</span>
+      </div>`
+      + dayData.map(({bread,Kis,Nagy})=>`<div class="summary-row">
+          <span>${escHtml(bread)}</span>
+          <span class="summary-qty">${Kis>0?`<span style="font-size:11px;color:#7a5a3a">kis:</span> ${Kis}`:''} ${Nagy>0?`<span style="font-size:11px;color:#7a5a3a">nagy:</span> ${Nagy}`:''}</span>
+        </div>`).join('')
+      + '</div>';
+  });
+
+  const weekData = BREADS.map(b=>({bread:b,...totalByBread[b]})).filter(x=>x.Kis>0||x.Nagy>0);
+  if (weekData.length) {
+    html += `<div class="summary-card"><div style="font-family:sans-serif;font-weight:700;font-size:14px;color:#5c3a1e;margin-bottom:8px">HETI ÖSSZESÍTŐ</div>`
+      + weekData.map(({bread,Kis,Nagy})=>`<div class="summary-row"><span>${escHtml(bread)}</span><span class="summary-qty">${Kis>0?`<span style="font-size:11px;color:#7a5a3a">kis:</span> ${Kis}`:''} ${Nagy>0?`<span style="font-size:11px;color:#7a5a3a">nagy:</span> ${Nagy}`:''}</span></div>`).join('')
+      + '</div>';
+  }
+
+  el.innerHTML = html;
+}
+
+function renderAdminBoard() {
+  const el = document.getElementById('admin-board');
+  if (!el) return;
+  const msgsHtml = messages.length===0
+    ? '<div class="empty">Még nincs üzenet</div>'
+    : messages.map(m=>`<div class="board-admin-row">
+        <div style="flex:1">
+          <div class="board-msg-text">${escHtml(m.text)}</div>
+          <div class="board-msg-date">${m.date}</div>
+        </div>
+        <button class="delete-btn" onclick="deleteMessage(${m.id})">Törlés</button>
+      </div>`).join('');
+  el.innerHTML = `<div class="card">
+    <div class="card-title">ÚJ ÜZENET</div>
+    <textarea id="new-msg-input" rows="4" placeholder="Írj üzenetet a rendelőknek..."></textarea>
+    <button class="sec-btn" onclick="postMessage()">Közzétesz →</button>
+  </div>${msgsHtml}`;
+}
+
+function postMessage() {
+  const input = document.getElementById('new-msg-input');
+  const text  = input.value.trim();
+  if (!text) return;
+  messages.unshift({ id:Date.now(), text, date:new Date().toLocaleDateString("hu-HU",{month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}) });
+  save(); renderAdminBoard(); renderBoard();
+}
+
+function deleteMessage(id) {
+  messages = messages.filter(m=>m.id!==id);
+  save(); renderAdminBoard(); renderBoard();
+}
+
+// ── Init ──
+buildDayBlocks();
+renderBoard();
+</script>
+</body>
+</html>
