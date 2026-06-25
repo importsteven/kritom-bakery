@@ -10,104 +10,104 @@
 body{min-height:100vh;background:linear-gradient(160deg,#fdf6ee 0%,#f5e9d6 50%,#ede0c8 100%);font-family:Georgia,serif;padding-bottom:60px}
 .wrap{max-width:480px;margin:0 auto;position:relative;z-index:1}
 .bg-decor{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:0;overflow:hidden}
-
 header{background:rgba(255,255,255,0.88);backdrop-filter:blur(8px);border-bottom:1px solid rgba(200,149,107,0.3);padding:18px 24px 14px;text-align:center;position:sticky;top:0;z-index:10}
 .logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
 .logo-name{font-size:26px;font-weight:700;letter-spacing:.04em;color:#5c3a1e;line-height:1}
 .logo-sub{font-size:11px;letter-spacing:.25em;color:#a0714a;text-transform:uppercase;font-family:sans-serif;font-weight:600}
 .nav{display:flex;gap:8px;justify-content:center}
-.nav button{padding:7px 18px;border-radius:20px;border:1.5px solid #ddd;background:transparent;color:#7a5a3a;font-family:sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.nav button{padding:7px 18px;border-radius:20px;border:1.5px solid #ddd;background:transparent;color:#7a5a3a;font-family:sans-serif;font-size:13px;font-weight:600;cursor:pointer}
 .nav button.active{border:2px solid #a0714a;background:#a0714a;color:#fff}
-
-.page{display:none;padding:20px 16px}
+.page{display:none;padding:18px 14px}
 .page.active{display:block}
 
 /* info box */
-.info-box{background:rgba(255,255,255,0.75);border-radius:12px;padding:13px 16px;margin-bottom:14px;border:1px solid rgba(200,149,107,0.25);font-family:sans-serif;font-size:13px;color:#7a5a3a;line-height:1.7}
-.week-range{background:rgba(160,113,74,0.12);border:1.5px solid rgba(160,113,74,0.35);border-radius:10px;padding:9px 14px;margin-top:8px;font-family:sans-serif;font-size:13px;color:#5c3a1e;font-weight:600;text-align:center}
+.info-box{background:rgba(255,255,255,0.78);border-radius:12px;padding:13px 16px;margin-bottom:12px;border:1px solid rgba(200,149,107,0.25);font-family:sans-serif;font-size:13px;color:#7a5a3a;line-height:1.8}
+.info-box strong{color:#5c3a1e}
+.info-row{display:flex;align-items:baseline;gap:6px}
+.info-label{color:#a0714a;font-weight:600;white-space:nowrap;font-size:12px}
+.week-highlight{display:inline-block;background:rgba(160,113,74,0.13);border:1.5px solid rgba(160,113,74,0.4);border-radius:8px;padding:5px 12px;margin-top:6px;font-weight:700;color:#5c3a1e;font-size:14px;width:100%;text-align:center}
 
 /* üzenőfal */
-.board-section{margin-bottom:14px}
-.board-divider{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.board-divider-line{flex:1;height:1px;background:rgba(160,113,74,0.25)}
-.board-title{font-family:Georgia,serif;font-size:14px;font-weight:700;color:#a0714a;letter-spacing:.05em;white-space:nowrap}
-.board-msg{background:rgba(255,255,255,0.82);border-radius:10px;padding:12px 14px;margin-bottom:8px;border:1px solid rgba(200,149,107,0.25);border-left:4px solid #c8956b}
+.board-section{margin-bottom:12px}
+.board-divider{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.board-divider-line{flex:1;height:1px;background:rgba(160,113,74,0.22)}
+.board-title{font-family:Georgia,serif;font-size:13px;font-weight:700;color:#a0714a;letter-spacing:.05em;white-space:nowrap}
+.board-msg{background:rgba(255,255,255,0.82);border-radius:9px;padding:11px 14px;margin-bottom:7px;border:1px solid rgba(200,149,107,0.22);border-left:4px solid #c8956b}
 .board-msg-text{font-family:sans-serif;font-size:13px;color:#3a2510;line-height:1.6;white-space:pre-wrap}
-.board-msg-date{font-family:sans-serif;font-size:11px;color:#b09070;margin-top:5px}
+.board-msg-date{font-family:sans-serif;font-size:11px;color:#b09070;margin-top:4px}
 
 /* card */
-.card{background:rgba(255,255,255,0.82);border-radius:14px;padding:16px;margin-bottom:12px;border:1px solid rgba(200,149,107,0.25)}
+.card{background:rgba(255,255,255,0.82);border-radius:14px;padding:15px 16px;margin-bottom:12px;border:1px solid rgba(200,149,107,0.25)}
 .card-title{font-family:sans-serif;font-weight:700;font-size:13px;color:#5c3a1e;margin-bottom:12px;letter-spacing:.04em}
 
-/* form */
-label.field-label{display:block;font-family:sans-serif;font-size:11px;color:#a0714a;margin-bottom:5px;font-weight:600;letter-spacing:.05em}
-input[type=text],input[type=tel],input[type=email],input[type=password],textarea,select{width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid rgba(160,113,74,0.35);background:rgba(255,255,255,0.92);font-family:sans-serif;font-size:14px;color:#3a2510;outline:none;transition:border-color .15s}
+/* form fields */
+label.field-label{display:block;font-family:sans-serif;font-size:11px;color:#a0714a;margin-bottom:4px;font-weight:600;letter-spacing:.05em}
+input[type=text],input[type=tel],input[type=email],input[type=password],textarea,select{width:100%;padding:9px 13px;border-radius:9px;border:1.5px solid rgba(160,113,74,0.35);background:rgba(255,255,255,0.92);font-family:sans-serif;font-size:14px;color:#3a2510;outline:none}
 input:focus,textarea:focus,select:focus{border-color:#a0714a}
-.field{margin-bottom:11px}
+.field{margin-bottom:10px}
 .err-text{color:#e24b4a;font-size:12px;font-family:sans-serif;margin-top:3px}
-input.has-error{border-color:#e24b4a}
+.addr-row{display:flex;gap:8px}
+.addr-row select{flex:1}
+.addr-row input{width:80px;flex-shrink:0}
 
-/* collapsible day */
-.day-block{background:rgba(255,255,255,0.82);border-radius:14px;margin-bottom:10px;border:1px solid rgba(200,149,107,0.25);overflow:hidden}
-.day-toggle{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;cursor:pointer;user-select:none;transition:background .15s}
-.day-toggle:hover{background:rgba(160,113,74,0.06)}
-.day-toggle.open{background:rgba(160,113,74,0.08)}
-.day-left{display:flex;flex-direction:column;gap:2px}
-.day-name{font-family:sans-serif;font-weight:700;font-size:14px;color:#5c3a1e;letter-spacing:.03em}
+/* collapsible days */
+.day-block{background:rgba(255,255,255,0.82);border-radius:14px;margin-bottom:9px;border:1px solid rgba(200,149,107,0.25);overflow:hidden}
+.day-toggle{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;cursor:pointer;user-select:none}
+.day-toggle:active{background:rgba(160,113,74,0.06)}
+.day-left{display:flex;flex-direction:column;gap:1px}
+.day-name{font-family:sans-serif;font-weight:700;font-size:14px;color:#5c3a1e;letter-spacing:.02em}
 .day-date{font-family:sans-serif;font-size:12px;color:#a0714a}
-.day-right{display:flex;align-items:center;gap:10px}
-.day-badge{background:#a0714a;color:#fff;border-radius:10px;padding:2px 9px;font-family:sans-serif;font-size:12px;font-weight:700;display:none}
-.day-badge.visible{display:inline-block}
-.day-arrow{font-size:16px;color:#a0714a;transition:transform .25s;line-height:1}
+.day-right{display:flex;align-items:center;gap:8px}
+.day-badge{background:#a0714a;color:#fff;border-radius:10px;padding:2px 8px;font-family:sans-serif;font-size:11px;font-weight:700;display:none}
+.day-badge.on{display:inline-block}
+.day-arrow{color:#c8956b;font-size:18px;transition:transform .2s;line-height:1}
 .day-toggle.open .day-arrow{transform:rotate(180deg)}
-.day-body{display:none;padding:0 14px 14px}
+.day-body{display:none;padding:0 14px 12px}
 .day-body.open{display:block}
 
-/* bread row – kis/nagy */
-.bread-row{display:flex;align-items:center;padding:8px 0;border-bottom:.5px solid rgba(200,149,107,0.12)}
+/* bread rows – kis/nagy */
+.bread-row{display:flex;align-items:center;padding:7px 0;border-bottom:.5px solid rgba(200,149,107,0.13)}
 .bread-row:last-child{border-bottom:none}
-.bread-label{font-family:sans-serif;font-size:14px;color:#5c3a1e;flex:1;min-width:0;padding-right:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.size-group{display:flex;align-items:center;gap:6px}
-.size-label{font-family:sans-serif;font-size:10px;font-weight:700;color:#a0714a;letter-spacing:.05em;min-width:22px;text-align:right}
-.qty-btn{width:26px;height:26px;border-radius:13px;border:1.5px solid rgba(160,113,74,0.45);background:transparent;color:#c8956b;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s;flex-shrink:0;padding:0}
-.qty-btn.has-qty{background:#a0714a;color:#fff;border-color:#a0714a}
-.qty-num{font-family:sans-serif;font-size:13px;font-weight:700;color:#5c3a1e;min-width:14px;text-align:center}
-.size-sep{width:1px;height:20px;background:rgba(200,149,107,0.3);margin:0 4px}
+.bread-label{font-family:sans-serif;font-size:13px;color:#5c3a1e;flex:1;min-width:0;padding-right:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.size-wrap{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.size-lbl{font-family:sans-serif;font-size:10px;font-weight:700;color:#a0714a;min-width:20px;text-align:center;letter-spacing:.04em}
+.qbtn{width:25px;height:25px;border-radius:13px;border:1.5px solid rgba(160,113,74,0.4);background:transparent;color:#c8956b;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0;flex-shrink:0}
+.qbtn.lit{background:#a0714a;color:#fff;border-color:#a0714a}
+.qnum{font-family:sans-serif;font-size:13px;font-weight:700;color:#5c3a1e;min-width:13px;text-align:center}
+.sz-sep{width:1px;height:18px;background:rgba(200,149,107,0.3);margin:0 3px}
 
-/* totals */
-.total-bar{background:rgba(92,58,30,0.06);border-radius:12px;padding:10px 16px;margin-bottom:12px;font-family:sans-serif;font-size:13px;color:#5c3a1e;text-align:center;border:1px solid rgba(160,113,74,0.18)}
-.submit-btn{width:100%;padding:15px;background:linear-gradient(135deg,#a0714a,#7a5030);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;font-family:sans-serif;cursor:pointer;letter-spacing:.04em;box-shadow:0 4px 16px rgba(120,80,40,0.25)}
+/* submit */
+.total-bar{background:rgba(92,58,30,0.06);border-radius:10px;padding:9px 14px;margin-bottom:10px;font-family:sans-serif;font-size:13px;color:#5c3a1e;text-align:center;border:1px solid rgba(160,113,74,0.16)}
+.submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,#a0714a,#7a5030);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:sans-serif;cursor:pointer;letter-spacing:.04em;box-shadow:0 4px 14px rgba(120,80,40,0.22)}
 .submit-btn:disabled{background:#c8a07a;cursor:not-allowed}
-
-.alert{border-radius:12px;padding:12px 16px;margin-bottom:14px;font-family:sans-serif;font-size:13px;text-align:center}
+.alert{border-radius:11px;padding:11px 15px;margin-bottom:12px;font-family:sans-serif;font-size:13px;text-align:center}
 .alert-warn{background:#fff3e0;border:1.5px solid #e6a020;color:#b06000}
-.alert-success{background:#eafaf1;border:1px solid #a8d5b5;color:#1e6b36}
-.alert-err-soft{background:#fff3e0;border:1px solid #e6a020;color:#b06000}
+.alert-ok{background:#eafaf1;border:1px solid #a8d5b5;color:#1e6b36}
+.alert-soft{background:#fff3e0;border:1px solid #e6a020;color:#b06000}
 
 /* thank you */
-.thank-you{text-align:center;padding:40px 20px}
-.thank-you .big-emoji{font-size:56px;margin-bottom:16px}
-.thank-you h2{font-size:22px;font-weight:700;color:#5c3a1e;margin-bottom:8px}
-.thank-you p{color:#7a5a3a;font-family:sans-serif;font-size:14px;line-height:1.6;margin-bottom:24px}
-.new-order-btn{background:#a0714a;color:#fff;border:none;border-radius:24px;padding:12px 28px;font-size:14px;font-weight:600;font-family:sans-serif;cursor:pointer}
+.thank-you{text-align:center;padding:44px 20px}
+.ty-icon{font-size:54px;margin-bottom:14px}
+.thank-you h2{font-size:21px;font-weight:700;color:#5c3a1e;margin-bottom:8px}
+.thank-you p{color:#7a5a3a;font-family:sans-serif;font-size:14px;line-height:1.6;margin-bottom:22px}
+.new-order-btn{background:#a0714a;color:#fff;border:none;border-radius:22px;padding:11px 28px;font-size:14px;font-weight:600;font-family:sans-serif;cursor:pointer}
 
 /* admin */
-.admin-login-card{background:rgba(255,255,255,0.88);border-radius:16px;padding:32px 24px;text-align:center;border:1px solid rgba(200,149,107,0.3)}
-.admin-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.admin-badge{background:#d4edda;color:#1e6b36;padding:4px 12px;border-radius:20px;font-family:sans-serif;font-size:12px;font-weight:600}
-.tab-bar{display:flex;gap:7px;margin-bottom:16px}
-.tab-bar button{flex:1;padding:9px 4px;border-radius:10px;border:1.5px solid #ddd;background:transparent;color:#7a5a3a;font-family:sans-serif;font-size:12px;font-weight:600;cursor:pointer}
+.admin-box{background:rgba(255,255,255,0.88);border-radius:14px;padding:30px 22px;text-align:center;border:1px solid rgba(200,149,107,0.28)}
+.admin-topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.abadge{background:#d4edda;color:#1e6b36;padding:4px 11px;border-radius:18px;font-family:sans-serif;font-size:12px;font-weight:600}
+.tab-bar{display:flex;gap:6px;margin-bottom:14px}
+.tab-bar button{flex:1;padding:8px 3px;border-radius:9px;border:1.5px solid #ddd;background:transparent;color:#7a5a3a;font-family:sans-serif;font-size:12px;font-weight:600;cursor:pointer}
 .tab-bar button.active{border:2px solid #a0714a;background:#a0714a;color:#fff}
-.summary-total{background:rgba(255,255,255,0.75);border-radius:10px;padding:11px 14px;margin-bottom:12px;font-family:sans-serif;font-size:13px;color:#7a5a3a;border:1px solid rgba(200,149,107,0.2)}
-.summary-card{background:rgba(255,255,255,0.88);border-radius:12px;padding:13px 14px;margin-bottom:10px;border:1px solid rgba(200,149,107,0.25)}
-.summary-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:.5px solid rgba(200,149,107,0.13);font-family:sans-serif;font-size:13px;color:#5c3a1e}
-.summary-row:last-child{border-bottom:none}
-.summary-qty{font-weight:700;color:#a0714a;min-width:44px;text-align:right}
-.order-card{background:rgba(255,255,255,0.88);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid rgba(200,149,107,0.25)}
-.delete-btn{background:#fee;border:1px solid #fcc;color:#e24b4a;border-radius:8px;padding:5px 9px;font-size:12px;font-family:sans-serif;cursor:pointer;flex-shrink:0}
-.sec-btn{width:100%;padding:11px;background:#a0714a;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;font-family:sans-serif;cursor:pointer;margin-top:10px}
+.order-card{background:rgba(255,255,255,0.9);border-radius:11px;padding:13px;margin-bottom:9px;border:1px solid rgba(200,149,107,0.22)}
+.del-btn{background:#fee;border:1px solid #fcc;color:#e24b4a;border-radius:7px;padding:5px 9px;font-size:12px;font-family:sans-serif;cursor:pointer;flex-shrink:0}
+.sec-btn{width:100%;padding:10px;background:#a0714a;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;font-family:sans-serif;cursor:pointer;margin-top:9px}
+.sum-card{background:rgba(255,255,255,0.9);border-radius:11px;padding:12px 14px;margin-bottom:9px;border:1px solid rgba(200,149,107,0.22)}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:.5px solid rgba(200,149,107,0.12);font-family:sans-serif;font-size:13px;color:#5c3a1e}
+.sum-row:last-child{border-bottom:none}
+.sum-qty{font-weight:700;color:#a0714a;font-size:12px;min-width:90px;text-align:right}
+.board-admin-row{background:rgba(255,255,255,0.9);border-radius:9px;padding:11px 13px;margin-bottom:7px;border:1px solid rgba(200,149,107,0.22);border-left:4px solid #c8956b;display:flex;justify-content:space-between;align-items:flex-start;gap:9px}
 .empty{text-align:center;padding:36px 20px;font-family:sans-serif;color:#a0714a;font-size:14px}
-.board-admin-row{background:rgba(255,255,255,0.88);border-radius:10px;padding:12px 14px;margin-bottom:8px;border:1px solid rgba(200,149,107,0.25);border-left:4px solid #c8956b;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 </style>
 </head>
 <body>
@@ -160,30 +160,25 @@ input.has-error{border-color:#e24b4a}
 
   <!-- ORDER PAGE -->
   <div id="page-order" class="page active">
-
     <div id="ordering-closed" class="alert alert-warn" style="display:none">
       <strong>⏰ Rendelési idő lezárva</strong><br>
-      <span style="font-size:13px">A következő rendelési határidő szombat 15:00.</span>
+      <span style="font-size:13px">A rendelési határidő szombaton 15:00-kor lejárt. Következő leadás jövő szombatig lehetséges.</span>
     </div>
 
     <div id="thank-you" style="display:none">
       <div class="thank-you">
-        <div class="big-emoji">🍞</div>
+        <div class="ty-icon">🍞</div>
         <h2>Köszönjük a rendelést!</h2>
-        <div id="email-ok" class="alert alert-success" style="display:none;margin-bottom:14px">✉️ Visszaigazoló emailt küldtünk a megadott címre.</div>
-        <div id="email-err" class="alert alert-err-soft" style="display:none;margin-bottom:14px">⚠️ Rendelésed megkaptuk, de az email küldés nem sikerült.</div>
+        <div id="email-ok" class="alert alert-ok" style="display:none">✉️ Visszaigazoló emailt küldtünk a megadott címre.</div>
+        <div id="email-err" class="alert alert-soft" style="display:none">⚠️ Rendelésed megkaptuk, de az email küldés nem sikerült.</div>
         <p>Szállítás napján 19:00-tól 🚚</p>
         <button class="new-order-btn" onclick="resetOrder()">Új rendelés</button>
       </div>
     </div>
 
     <div id="order-form">
-      <!-- Info + rendelési intervallum -->
-      <div class="info-box">
-        📅 <strong>Következő heti rendelés</strong><br>
-        Leadási határidő: szombat 15:00 · Szállítás aznap 19:00-tól
-        <div class="week-range" id="week-range-display">🗓 Betöltés...</div>
-      </div>
+      <!-- Info box -->
+      <div class="info-box" id="info-box"></div>
 
       <!-- Üzenőfal -->
       <div id="board-public" class="board-section" style="display:none"></div>
@@ -201,17 +196,27 @@ input.has-error{border-color:#e24b4a}
           <input type="tel" id="f-phone" placeholder="pl. +36 20 123 4567">
           <div class="err-text" id="err-phone" style="display:none">Kérjük add meg a telefonszámot!</div>
         </div>
-        <div class="field" style="margin-bottom:0">
+        <div class="field">
           <label class="field-label">E-MAIL CÍM</label>
           <input type="email" id="f-email" placeholder="pl. anna@email.com">
           <div class="err-text" id="err-email" style="display:none">Érvényes email szükséges!</div>
         </div>
+        <div class="field" style="margin-bottom:0">
+          <label class="field-label">SZÁLLÍTÁSI CÍM (DUNAHARASZTI)</label>
+          <div class="addr-row">
+            <select id="f-street">
+              <option value="">– Válassz utcát –</option>
+            </select>
+            <input type="text" id="f-streetnr" placeholder="hsz." style="width:72px">
+          </div>
+          <div class="err-text" id="err-addr" style="display:none">Kérjük add meg a szállítási címet!</div>
+        </div>
       </div>
 
-      <!-- Napok (lenyitható) -->
+      <!-- Napok -->
       <div id="day-blocks"></div>
 
-      <div class="err-text" id="err-items" style="display:none;text-align:center;margin-bottom:10px;font-weight:600">Legalább egy pékárut kell rendelni!</div>
+      <div class="err-text" id="err-items" style="display:none;text-align:center;margin-bottom:9px;font-weight:600">Legalább egy pékárut kell rendelni!</div>
       <div class="total-bar" id="total-bar" style="display:none">Összesen: <strong id="total-num">0</strong> db kiválasztva</div>
       <button class="submit-btn" id="submit-btn" onclick="submitOrder()">RENDELÉS LEADÁSA →</button>
     </div>
@@ -220,9 +225,9 @@ input.has-error{border-color:#e24b4a}
   <!-- ADMIN PAGE -->
   <div id="page-admin" class="page">
     <div id="admin-login">
-      <div class="admin-login-card">
-        <div style="font-size:42px;margin-bottom:12px">🔐</div>
-        <div style="font-family:sans-serif;font-weight:700;font-size:16px;color:#5c3a1e;margin-bottom:20px">Admin belépés</div>
+      <div class="admin-box">
+        <div style="font-size:40px;margin-bottom:11px">🔐</div>
+        <div style="font-family:sans-serif;font-weight:700;font-size:15px;color:#5c3a1e;margin-bottom:18px">Admin belépés</div>
         <input type="password" id="admin-pw" placeholder="Jelszó" onkeydown="if(event.key==='Enter')adminLogin()">
         <div class="err-text" id="admin-pw-err" style="display:none;margin:6px 0">Hibás jelszó</div>
         <button class="sec-btn" onclick="adminLogin()">Belépés</button>
@@ -231,7 +236,7 @@ input.has-error{border-color:#e24b4a}
     <div id="admin-panel" style="display:none">
       <div class="admin-topbar">
         <span style="font-family:sans-serif;font-weight:700;font-size:15px;color:#5c3a1e">Admin panel</span>
-        <span class="admin-badge" id="order-count">0 rendelés</span>
+        <span class="abadge" id="order-count">0 rendelés</span>
       </div>
       <div class="tab-bar">
         <button class="active" onclick="showAdminTab('orders',this)">📋 Rendelések</button>
@@ -251,15 +256,16 @@ const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
 const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
 const EMAILJS_PUBLIC_KEY  = "YOUR_PUBLIC_KEY";
 
-const BREADS   = ["Diós","Sima","Olivás","Quinoa","Köleses","Hajdinás","Chilis sajt","Céklás sajt","Füstölt sajt","Sokmagvas","Cheddar sajt","Chia magos","Fokhagymás","Áfonyás diós","Pirított hagymás","Fokhagymás sajt","Fekete szezámos","Aszalt paradicsomos","Kiskalács","Nagykalács"];
+const BREADS   = ["Diós","Sima","Olivás","Quinoa","Köleses","Hajdinás","Chilis sajt","Céklás sajt","Füstölt sajt","Sokmagvas","Cheddar sajt","Chia magos","Fokhagymás","Áfonyás diós","Pirított hagymás","Fokhagymás sajt","Fekete szezámos","Aszalt paradicsomos","Kalács"];
 const DAYS     = ["Hétfő","Kedd","Szerda","Csütörtök","Péntek","Szombat"];
 const DAY_KEYS = ["hetfo","kedd","szerda","csutortok","pentek","szombat"];
 const ADMIN_PW = "kritom2024";
 const SIZES    = ["Kis","Nagy"];
 
-let orders     = JSON.parse(localStorage.getItem("kritom_orders")   || "[]");
-let messages   = JSON.parse(localStorage.getItem("kritom_messages")  || "[]");
-// selections: key = "dayKey__bread__size" => qty
+const STREETS = ["Ady Endre utca","Agorasztó Tivadar utca","Ág utca","Akácfa utca","Alkotmány utca","Alsó Duna sor","Andrássy Gyula utca","Andrássy György utca","Apponyi Albert utca","Arany János utca","Árnyas utca","Árok utca","Árpád utca","Attila utca","Avar köz","Avar utca","Bábakalács utca","Babits köz","Babits Mihály utca","Bagoly utca","Baktay Ervin tér","Baktay Ervin utca","Bánki Donát utca","Baradlay János utca","Barka utca","Baross utca","Bartal Antal utca","Bartók Béla utca","Báthory utca","Batthyány utca","Bem József utca","Bercsényi utca","Bethlen Gábor köz","Bethlen Gábor sor","Bethlen Gábor utca","Bezerédi utca","Bláthy Ottó utca","Bocskai utca","Bolyai utca","Boróka utca","Botond utca","Búzavirág sor","Cickafark utca","Cinege utca","Csárda sor","Csatorna sor","Csendes utca","Csengeri utca","Csillag köz","Csók István utca","Damjanich utca","Deák Ferenc utca","Dózsa György utca","Duna sor","Eötvös utca","Erdei Ferenc utca","Erzsébet utca","Fecske köz","Fecske utca","Fehér utca","Fekete utca","Felső Duna sor","Fényes Elek utca","Fenyő utca","Fiume utca","Fodor József utca","Foglár György utca","Forrás utca","Földvári utca","Fő utca","Gárdonyi Géza utca","Golgota utca","Görgei Artúr utca","Gyöngy utca","Gyöngyvirág utca","Győri utca","Hajnal utca","Határ utca","Hegyalja utca","Horgász utca","Hunyadi János utca","Ifjúság utca","Ikrek utca","Ipar utca","Iskola utca","Jácint utca","Jókai Mór utca","József Attila utca","Juhar utca","Juhos utca","Kalmár utca","Kankalin utca","Károlyi Mihály utca","Kassák Lajos utca","Kengyel köz","Kengyel utca","Kerkai Jenő park","Kikötő sétány","Kinizsi utca","Kisfaludy Károly utca","Klauzál utca","Kós Károly utca","Kossuth Lajos utca","Körtefa utca","Kölcsey Ferenc utca","Kőrösi Csoma Sándor utca","Las Torres utca","Lehel utca","Lenvirág utca","Levél utca","Liget utca","Lovas utca","Lóverseny utca","Madách utca","Magyar utca","Mátyás utca","Mészáros utca","Miklós sor","Millenniumi utca","Mindszenty József utca","Mogyorófa utca","Munkácsy Mihály utca","Napsugár utca","Nefelejcs utca","Némedi út","Nyereg utca","Nyírfa utca","Október 6. utca","Orbán tér","Őrtorony utca","Pálma utca","Pannónia utca","Parti sétány","Petőfi Sándor utca","Pillangó köz","Pillangó utca","Pipacs utca","Ponty köz","Ponty utca","Rajkovics Károly utca","Rákóczi Ferenc utca","Rét utca","Rezeda utca","Rigó utca","Római utca","Rozmaring utca","Sas utca","Sisak utca","Somogyváry utca","Sport utca","Strand utca","Szabadság utca","Szabolcs utca","Széchenyi utca","Szivárvány utca","Szőlő utca","Tátra utca","Temető utca","Thököly utca","Tisza utca","Tóth Árpád utca","Vadász utca","Vásár utca","Veres Péter utca","Virág utca","Vörösmarty utca","Wesselényi utca","Zrínyi Miklós utca","Zöld utca"];
+
+let orders   = JSON.parse(localStorage.getItem("kritom_orders")   || "[]");
+let messages = JSON.parse(localStorage.getItem("kritom_messages")  || "[]");
 let selections = {};
 
 function save() {
@@ -267,373 +273,312 @@ function save() {
   localStorage.setItem("kritom_messages", JSON.stringify(messages));
 }
 
-// ── Week range calculation ──
-function getOrderingWeekInfo() {
-  const now    = new Date();
-  const dow    = now.getDay(); // 0=Sun,6=Sat
-  const hour   = now.getHours();
-  const min    = now.getMinutes();
-
+// ── Week / date logic ──
+function getWeekInfo() {
+  const now  = new Date();
+  const dow  = now.getDay(); // 0=Sun, 6=Sat
+  const h    = now.getHours(), m = now.getMinutes();
   // Cutoff: Saturday 15:30
-  const pastCutoff = (dow === 6 && (hour > 15 || (hour === 15 && min >= 30))) || dow === 0;
+  const pastCutoff = (dow === 6 && (h > 15 || (h === 15 && m >= 30))) || dow === 0;
 
-  // Find the upcoming Monday
-  let daysToMon;
-  if (pastCutoff) {
-    // next week's Monday
-    daysToMon = dow === 0 ? 8 : (8 - dow) % 7 + 7;
-    // simpler: always jump to the Monday after next Sunday
-    daysToMon = (8 - dow) % 7;
-    if (daysToMon === 0) daysToMon = 7;
-    // if we're past cutoff on Saturday, add 7 more
-    if (dow === 6) daysToMon = 9 - dow + 7 - 7; // next next Monday
-    // let's just be explicit:
-    if (dow === 6) daysToMon = 8;
-    if (dow === 0) daysToMon = 8;
-  } else {
-    daysToMon = dow === 1 ? 0 : (8 - dow) % 7;
-    if (daysToMon === 0 && dow !== 1) daysToMon = 7;
-    // If today is Mon-Sat before cutoff, next Monday
-    if (dow === 1) daysToMon = 0; // this week's Monday (today)
-    daysToMon = (dow === 0) ? 1 : (8 - dow) % 7;
-    if (daysToMon === 7) daysToMon = 0;
-  }
-
-  // Recalculate cleanly
-  let monday = new Date(now);
-  if (!pastCutoff) {
-    // current week's Monday
-    const d = now.getDay(); // 0=Sun
-    const diff = d === 0 ? -6 : 1 - d;
-    monday.setDate(now.getDate() + diff);
-  } else {
-    // next week's Monday
-    const d = now.getDay();
-    const diff = d === 0 ? 1 : 8 - d;
-    monday.setDate(now.getDate() + diff);
-  }
+  // Compute the target Monday
+  const monday = new Date(now);
   monday.setHours(0,0,0,0);
+  if (!pastCutoff) {
+    // This week's Monday
+    const diff = dow === 0 ? -6 : 1 - dow;
+    monday.setDate(now.getDate() + diff);
+  } else {
+    // Next week's Monday
+    const diff = dow === 0 ? 1 : 8 - dow;
+    monday.setDate(now.getDate() + diff);
+  }
 
   const saturday = new Date(monday);
   saturday.setDate(monday.getDate() + 5);
 
-  const fmt = (d) => d.toLocaleDateString("hu-HU", {month:"long", day:"numeric"});
+  // Deadline Saturday of the PREVIOUS week (the saturday before monday)
+  const deadlineSat = new Date(monday);
+  deadlineSat.setDate(monday.getDate() - 2); // always the Saturday before
+
+  const weekNum = getISOWeek(monday);
+
+  const fmt     = (d) => d.toLocaleDateString("hu-HU", {month:"long", day:"numeric"});
+  const fmtFull = (d) => d.toLocaleDateString("hu-HU", {year:"numeric", month:"2-digit", day:"2-digit"}).replace(/\//g, '.');
 
   const weekDates = DAY_KEYS.map((_,i) => {
     const dd = new Date(monday);
     dd.setDate(monday.getDate() + i);
-    return dd.toLocaleDateString("hu-HU", {month:"long", day:"numeric"});
+    return fmt(dd);
   });
 
-  return { rangeText: `🗓 ${fmt(monday)} – ${fmt(saturday)}`, weekDates, pastCutoff };
+  return {
+    weekNum,
+    rangeStr:    `${fmt(monday)} – ${fmt(saturday)}`,
+    deadlineStr: `${fmtFull(deadlineSat)} szombat 15:00`,
+    weekDates,
+    pastCutoff,
+    monday
+  };
 }
 
-const { rangeText, weekDates, pastCutoff } = getOrderingWeekInfo();
-document.getElementById('week-range-display').textContent = rangeText;
-if (pastCutoff) document.getElementById('ordering-closed').style.display = 'block';
+function getISOWeek(date) {
+  const d = new Date(date);
+  d.setHours(0,0,0,0);
+  d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+  const yearStart = new Date(d.getFullYear(), 0, 1);
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
+
+const WI = getWeekInfo();
+
+// Populate info box
+document.getElementById('info-box').innerHTML =
+  `<div><strong>Következő, ${WI.weekNum}. heti rendelés</strong></div>` +
+  `<div class="info-row"><span class="info-label">Leadási határidő:</span> ${WI.deadlineStr}</div>` +
+  `<div class="info-row"><span class="info-label">Szállítás:</span> aznap 19:00-tól</div>` +
+  `<div class="week-highlight">🗓 ${WI.rangeStr}</div>`;
+
+if (WI.pastCutoff) document.getElementById('ordering-closed').style.display = 'block';
+
+// Populate street select
+const sel = document.getElementById('f-street');
+STREETS.forEach(s => { const o = document.createElement('option'); o.value=s; o.textContent=s; sel.appendChild(o); });
 
 // ── Nav ──
 function showPage(id, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 }
 
 // ── Day blocks ──
 function buildDayBlocks() {
-  const container = document.getElementById('day-blocks');
-  container.innerHTML = '';
+  const c = document.getElementById('day-blocks');
+  c.innerHTML = '';
   DAY_KEYS.forEach((dk, di) => {
-    const block = document.createElement('div');
-    block.className = 'day-block';
-    block.innerHTML = `
-      <div class="day-toggle" id="toggle-${dk}" onclick="toggleDay('${dk}')">
+    const div = document.createElement('div');
+    div.className = 'day-block';
+    div.innerHTML = `
+      <div class="day-toggle" id="tog-${dk}" onclick="toggleDay('${dk}')">
         <div class="day-left">
           <span class="day-name">${DAYS[di].toUpperCase()}</span>
-          <span class="day-date">${weekDates[di]}</span>
+          <span class="day-date">${WI.weekDates[di]}</span>
         </div>
         <div class="day-right">
-          <span class="day-badge" id="badge-${dk}"></span>
+          <span class="day-badge" id="bdg-${dk}"></span>
           <span class="day-arrow">▾</span>
         </div>
       </div>
-      <div class="day-body" id="body-${dk}">
-        ${BREADS.map(bread => `
-          <div class="bread-row">
-            <span class="bread-label" title="${bread}">${bread}</span>
-            <div style="display:flex;align-items:center;gap:8px">
-              <div class="size-group">
-                <span class="size-label">KIS</span>
-                <button class="qty-btn" id="btn-m-${dk}-${bread}-Kis" onclick="updateQty('${dk}','${bread}','Kis',-1)">−</button>
-                <span class="qty-num" id="qty-${dk}-${bread}-Kis">0</span>
-                <button class="qty-btn has-qty" onclick="updateQty('${dk}','${bread}','Kis',1)">+</button>
-              </div>
-              <div class="size-sep"></div>
-              <div class="size-group">
-                <span class="size-label">NAGY</span>
-                <button class="qty-btn" id="btn-m-${dk}-${bread}-Nagy" onclick="updateQty('${dk}','${bread}','Nagy',-1)">−</button>
-                <span class="qty-num" id="qty-${dk}-${bread}-Nagy">0</span>
-                <button class="qty-btn has-qty" onclick="updateQty('${dk}','${bread}','Nagy',1)">+</button>
-              </div>
-            </div>
-          </div>`).join('')}
+      <div class="day-body" id="bdy-${dk}">
+        ${BREADS.map(b => `
+        <div class="bread-row">
+          <span class="bread-label" title="${b}">${b}</span>
+          <div class="size-wrap">
+            <span class="size-lbl">KIS</span>
+            <button class="qbtn" id="bm-${dk}-${b}-Kis" onclick="upd('${dk}','${b}','Kis',-1)">−</button>
+            <span class="qnum" id="q-${dk}-${b}-Kis">0</span>
+            <button class="qbtn lit" onclick="upd('${dk}','${b}','Kis',1)">+</button>
+            <div class="sz-sep"></div>
+            <span class="size-lbl">NAGY</span>
+            <button class="qbtn" id="bm-${dk}-${b}-Nagy" onclick="upd('${dk}','${b}','Nagy',-1)">−</button>
+            <span class="qnum" id="q-${dk}-${b}-Nagy">0</span>
+            <button class="qbtn lit" onclick="upd('${dk}','${b}','Nagy',1)">+</button>
+          </div>
+        </div>`).join('')}
       </div>`;
-    container.appendChild(block);
+    c.appendChild(div);
   });
 }
 
 function toggleDay(dk) {
-  const toggle = document.getElementById('toggle-'+dk);
-  const body   = document.getElementById('body-'+dk);
-  toggle.classList.toggle('open');
-  body.classList.toggle('open');
+  document.getElementById('tog-'+dk).classList.toggle('open');
+  document.getElementById('bdy-'+dk).classList.toggle('open');
 }
 
-function updateQty(day, bread, size, delta) {
+function upd(day, bread, size, delta) {
   const key = `${day}__${bread}__${size}`;
-  selections[key] = Math.max(0, (selections[key] || 0) + delta);
-  if (selections[key] === 0) delete selections[key];
-  const qty = selections[key] || 0;
-
-  document.getElementById(`qty-${day}-${bread}-${size}`).textContent = qty;
-  const minusBtn = document.getElementById(`btn-m-${day}-${bread}-${size}`);
-  if (minusBtn) qty > 0 ? minusBtn.classList.add('has-qty') : minusBtn.classList.remove('has-qty');
-
-  // update badge on day header
-  const dayTotal = Object.entries(selections)
-    .filter(([k]) => k.startsWith(day+'__'))
-    .reduce((a,[,v]) => a+v, 0);
-  const badge = document.getElementById('badge-'+day);
-  if (dayTotal > 0) { badge.textContent = dayTotal+' db'; badge.classList.add('visible'); }
-  else { badge.textContent=''; badge.classList.remove('visible'); }
-
-  updateTotal();
-}
-
-function updateTotal() {
-  const total = Object.values(selections).reduce((a,b)=>a+b, 0);
-  const bar = document.getElementById('total-bar');
-  if (total > 0) { bar.style.display='block'; document.getElementById('total-num').textContent=total; }
-  else bar.style.display='none';
+  selections[key] = Math.max(0, (selections[key]||0) + delta);
+  if (!selections[key]) delete selections[key];
+  const qty = selections[key]||0;
+  document.getElementById(`q-${day}-${bread}-${size}`).textContent = qty;
+  const mb = document.getElementById(`bm-${day}-${bread}-${size}`);
+  if (mb) qty>0 ? mb.classList.add('lit') : mb.classList.remove('lit');
+  // badge
+  const dt = Object.entries(selections).filter(([k])=>k.startsWith(day+'__')).reduce((a,[,v])=>a+v,0);
+  const bdg = document.getElementById('bdg-'+day);
+  if (dt>0){bdg.textContent=dt+' db';bdg.classList.add('on');}else{bdg.textContent='';bdg.classList.remove('on');}
+  // total
+  const tot = Object.values(selections).reduce((a,b)=>a+b,0);
+  const tb  = document.getElementById('total-bar');
+  if(tot>0){tb.style.display='block';document.getElementById('total-num').textContent=tot;}else tb.style.display='none';
 }
 
 // ── Submit ──
 async function submitOrder() {
-  let ok = true;
-  const name  = document.getElementById('f-name').value.trim();
-  const phone = document.getElementById('f-phone').value.trim();
-  const email = document.getElementById('f-email').value.trim();
-  const show  = (id, v) => document.getElementById(id).style.display = v ? 'block' : 'none';
-
-  show('err-name',  !name);  if (!name)  ok=false;
-  show('err-phone', !phone); if (!phone) ok=false;
-  show('err-email', !email || !email.includes('@')); if (!email || !email.includes('@')) ok=false;
+  let ok=true;
+  const name   = document.getElementById('f-name').value.trim();
+  const phone  = document.getElementById('f-phone').value.trim();
+  const email  = document.getElementById('f-email').value.trim();
+  const street = document.getElementById('f-street').value;
+  const nr     = document.getElementById('f-streetnr').value.trim();
+  const show   = (id,v) => document.getElementById(id).style.display = v?'block':'none';
+  show('err-name',  !name);  if(!name)  ok=false;
+  show('err-phone', !phone); if(!phone) ok=false;
+  show('err-email', !email||!email.includes('@')); if(!email||!email.includes('@')) ok=false;
+  show('err-addr',  !street||!nr); if(!street||!nr) ok=false;
   const hasItems = Object.values(selections).some(v=>v>0);
-  show('err-items', !hasItems); if (!hasItems) ok=false;
-  if (!ok) return;
+  show('err-items', !hasItems); if(!hasItems) ok=false;
+  if(!ok) return;
 
-  const btn = document.getElementById('submit-btn');
+  const btn=document.getElementById('submit-btn');
   btn.disabled=true; btn.textContent='Küldés...';
 
   const items = Object.entries(selections)
     .filter(([,q])=>q>0)
     .map(([key,qty])=>{ const [day,bread,size]=key.split('__'); return {day,bread,size,qty}; });
 
-  orders.push({ id:Date.now(), date:new Date().toLocaleDateString("hu-HU"), name, phone, email, items, week:weekDates[0] });
+  orders.push({id:Date.now(), date:new Date().toLocaleDateString("hu-HU"), name, phone, email,
+    address:`${street} ${nr}`, items, week:WI.rangeStr});
   save();
 
-  // email
-  let emailOk = false;
-  if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
-    try {
-      emailjs.init({publicKey: EMAILJS_PUBLIC_KEY});
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        to_name: name, to_email: email,
-        order_summary: buildSummaryText(items)
-      });
-      emailOk = true;
-    } catch(e) {}
+  let emailOk=false;
+  if(EMAILJS_PUBLIC_KEY!=="YOUR_PUBLIC_KEY"){
+    try{
+      emailjs.init({publicKey:EMAILJS_PUBLIC_KEY});
+      await emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{to_name:name,to_email:email,order_summary:buildSummary(items),address:`${street} ${nr}`});
+      emailOk=true;
+    }catch(e){}
   }
 
   document.getElementById('order-form').style.display='none';
   document.getElementById('thank-you').style.display='block';
-  if (emailOk) show('email-ok', true);
-  else if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") show('email-err', true);
+  if(emailOk) show('email-ok',true);
+  else if(EMAILJS_PUBLIC_KEY!=="YOUR_PUBLIC_KEY") show('email-err',true);
 }
 
-function buildSummaryText(items) {
-  const byDay = {};
-  items.forEach(i => {
-    if (!byDay[i.day]) byDay[i.day]=[];
-    byDay[i.day].push(`${i.bread} (${i.size}): ${i.qty} db`);
-  });
-  return DAY_KEYS.map((dk,di) => byDay[dk] ? `${DAYS[di]}: ${byDay[dk].join(', ')}` : null).filter(Boolean).join('\n');
+function buildSummary(items){
+  const bd={};
+  items.forEach(i=>{if(!bd[i.day])bd[i.day]=[];bd[i.day].push(`${i.bread} (${i.size}): ${i.qty} db`);});
+  return DAY_KEYS.map((dk,di)=>bd[dk]?`${DAYS[di]}: ${bd[dk].join(', ')}`:null).filter(Boolean).join('\n');
 }
 
-function resetOrder() {
-  selections = {};
-  ['f-name','f-phone','f-email'].forEach(id => document.getElementById(id).value='');
+function resetOrder(){
+  selections={};
+  ['f-name','f-phone','f-email','f-streetnr'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-street').value='';
   document.getElementById('order-form').style.display='block';
   document.getElementById('thank-you').style.display='none';
-  document.getElementById('email-ok').style.display='none';
-  document.getElementById('email-err').style.display='none';
+  ['email-ok','email-err'].forEach(id=>document.getElementById(id).style.display='none');
   const btn=document.getElementById('submit-btn');
-  btn.disabled=false; btn.textContent='RENDELÉS LEADÁSA →';
-  buildDayBlocks();
-  updateTotal();
+  btn.disabled=false;btn.textContent='RENDELÉS LEADÁSA →';
+  buildDayBlocks(); 
+  document.getElementById('total-bar').style.display='none';
 }
 
-// ── Üzenőfal (public) ──
-function renderBoard() {
-  const el = document.getElementById('board-public');
-  if (messages.length === 0) { el.style.display='none'; return; }
-  el.style.display = 'block';
-  el.innerHTML = `<div class="board-divider"><div class="board-divider-line"></div><div class="board-title">📌 Üzenőfal</div><div class="board-divider-line"></div></div>`
-    + messages.map(m=>`<div class="board-msg"><div class="board-msg-text">${escHtml(m.text)}</div><div class="board-msg-date">${m.date}</div></div>`).join('');
+// ── Board (public) ──
+function renderBoard(){
+  const el=document.getElementById('board-public');
+  if(!messages.length){el.style.display='none';return;}
+  el.style.display='block';
+  el.innerHTML=`<div class="board-divider"><div class="board-divider-line"></div><div class="board-title">📌 Üzenőfal</div><div class="board-divider-line"></div></div>`
+    +messages.map(m=>`<div class="board-msg"><div class="board-msg-text">${esc(m.text)}</div><div class="board-msg-date">${m.date}</div></div>`).join('');
 }
-
-function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
 // ── Admin ──
-function adminLogin() {
-  if (document.getElementById('admin-pw').value === ADMIN_PW) {
+function adminLogin(){
+  if(document.getElementById('admin-pw').value===ADMIN_PW){
     document.getElementById('admin-login').style.display='none';
     document.getElementById('admin-panel').style.display='block';
     renderAdmin();
-  } else {
-    document.getElementById('admin-pw-err').style.display='block';
-  }
+  }else document.getElementById('admin-pw-err').style.display='block';
 }
 
-function showAdminTab(tab, btn) {
-  ['orders','summary','board'].forEach(t => {
-    document.getElementById('admin-'+t).style.display = t===tab ? 'block' : 'none';
-  });
+function showAdminTab(tab,btn){
+  ['orders','summary','board'].forEach(t=>document.getElementById('admin-'+t).style.display=t===tab?'block':'none');
   document.querySelectorAll('.tab-bar button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderAdmin();
 }
 
-function renderAdmin() {
-  document.getElementById('order-count').textContent = orders.length + ' rendelés';
-  renderAdminOrders();
-  renderAdminSummary();
-  renderAdminBoard();
+function renderAdmin(){
+  document.getElementById('order-count').textContent=orders.length+' rendelés';
+  renderAdminOrders(); renderAdminSummary(); renderAdminBoard();
 }
 
-function renderAdminOrders() {
-  const el = document.getElementById('admin-orders');
-  if (!el) return;
-  const filterVal = document.getElementById('filter-day')?.value || 'all';
-  const filtered  = filterVal==='all' ? orders : orders.filter(o=>o.items.some(i=>i.day===filterVal));
-
-  const selHtml = `<div style="margin-bottom:12px"><select id="filter-day" onchange="renderAdminOrders()" style="width:100%;padding:9px 14px;border-radius:9px;border:1.5px solid rgba(160,113,74,.35);font-family:sans-serif;font-size:13px;background:rgba(255,255,255,.9);color:#5c3a1e">
+function renderAdminOrders(){
+  const el=document.getElementById('admin-orders'); if(!el)return;
+  const fv=document.getElementById('filter-day')?.value||'all';
+  const fil=fv==='all'?orders:orders.filter(o=>o.items.some(i=>i.day===fv));
+  const selHtml=`<div style="margin-bottom:11px"><select id="filter-day" onchange="renderAdminOrders()" style="width:100%;padding:9px 13px;border-radius:9px;border:1.5px solid rgba(160,113,74,.35);font-family:sans-serif;font-size:13px;background:#fff;color:#5c3a1e">
     <option value="all">Összes nap</option>
-    ${DAY_KEYS.map((k,i)=>`<option value="${k}"${k===filterVal?' selected':''}>${DAYS[i]}</option>`).join('')}
+    ${DAY_KEYS.map((k,i)=>`<option value="${k}"${k===fv?' selected':''}>${DAYS[i]}</option>`).join('')}
   </select></div>`;
-
-  if (filtered.length===0) { el.innerHTML=selHtml+'<div class="empty">Még nincs leadott rendelés</div>'; return; }
-
-  el.innerHTML = selHtml + filtered.map(o => {
-    const itemsHtml = DAY_KEYS.map((dk,di) => {
-      const dayItems = o.items.filter(i=>i.day===dk);
-      if (!dayItems.length) return '';
-      return `<div style="font-family:sans-serif;font-size:11px;font-weight:700;color:#a0714a;letter-spacing:.06em;margin:6px 0 3px">${DAYS[di].toUpperCase()}</div>`
-        + dayItems.map(i=>`<div style="display:flex;justify-content:space-between;font-family:sans-serif;font-size:13px;color:#5c3a1e;padding:2px 0"><span>${escHtml(i.bread)} <span style="color:#a0714a;font-size:11px">(${i.size})</span></span><span style="font-weight:700">${i.qty} db</span></div>`).join('');
+  if(!fil.length){el.innerHTML=selHtml+'<div class="empty">Még nincs leadott rendelés</div>';return;}
+  el.innerHTML=selHtml+fil.map(o=>{
+    const ih=DAY_KEYS.map((dk,di)=>{
+      const di2=o.items.filter(i=>i.day===dk);
+      if(!di2.length)return'';
+      return`<div style="font-family:sans-serif;font-size:11px;font-weight:700;color:#a0714a;letter-spacing:.06em;margin:5px 0 2px">${DAYS[di].toUpperCase()}</div>`
+        +di2.map(i=>`<div style="display:flex;justify-content:space-between;font-family:sans-serif;font-size:13px;color:#5c3a1e;padding:2px 0"><span>${esc(i.bread)} <span style="color:#b09070;font-size:11px">(${i.size})</span></span><span style="font-weight:700">${i.qty} db</span></div>`).join('');
     }).join('');
-    return `<div class="order-card">
+    return`<div class="order-card">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
         <div>
-          <div style="font-family:sans-serif;font-weight:700;font-size:15px;color:#5c3a1e">${escHtml(o.name)}</div>
-          <div style="font-family:sans-serif;font-size:12px;color:#a0714a;margin-top:2px">${escHtml(o.phone)} · ${escHtml(o.email)}</div>
-          <div style="font-family:sans-serif;font-size:11px;color:#bbb;margin-top:2px">Leadva: ${o.date}</div>
+          <div style="font-family:sans-serif;font-weight:700;font-size:14px;color:#5c3a1e">${esc(o.name)}</div>
+          <div style="font-family:sans-serif;font-size:12px;color:#a0714a;margin-top:1px">${esc(o.phone)} · ${esc(o.email)}</div>
+          <div style="font-family:sans-serif;font-size:12px;color:#7a5a3a;margin-top:1px">📍 ${esc(o.address||'–')}</div>
+          <div style="font-family:sans-serif;font-size:11px;color:#ccc;margin-top:1px">Leadva: ${o.date}</div>
         </div>
-        <button class="delete-btn" onclick="deleteOrder(${o.id})">Törlés</button>
+        <button class="del-btn" onclick="delOrder(${o.id})">Törlés</button>
       </div>
-      <div style="border-top:1px solid rgba(200,149,107,.2);padding-top:8px">${itemsHtml}</div>
+      <div style="border-top:1px solid rgba(200,149,107,.18);padding-top:7px">${ih}</div>
     </div>`;
   }).join('');
 }
 
-function deleteOrder(id) {
-  orders = orders.filter(o=>o.id!==id);
-  save(); renderAdmin();
-}
+function delOrder(id){orders=orders.filter(o=>o.id!==id);save();renderAdmin();}
 
-function renderAdminSummary() {
-  const el = document.getElementById('admin-summary');
-  if (!el) return;
-  const totalAll = orders.reduce((a,o)=>a+o.items.reduce((b,i)=>b+i.qty,0),0);
-
-  // byDay[dk][bread][size] = qty
+function renderAdminSummary(){
+  const el=document.getElementById('admin-summary');if(!el)return;
+  const tot=orders.reduce((a,o)=>a+o.items.reduce((b,i)=>b+i.qty,0),0);
   const byDay={};
-  DAY_KEYS.forEach(dk=>{ byDay[dk]={}; BREADS.forEach(b=>{ byDay[dk][b]={Kis:0,Nagy:0}; }); });
-  orders.forEach(o=>o.items.forEach(i=>{ if(byDay[i.day]&&byDay[i.day][i.bread]) byDay[i.day][i.bread][i.size]=(byDay[i.day][i.bread][i.size]||0)+i.qty; }));
+  DAY_KEYS.forEach(dk=>{byDay[dk]={};BREADS.forEach(b=>{byDay[dk][b]={Kis:0,Nagy:0};});});
+  orders.forEach(o=>o.items.forEach(i=>{if(byDay[i.day]&&byDay[i.day][i.bread])byDay[i.day][i.bread][i.size]=(byDay[i.day][i.bread][i.size]||0)+i.qty;}));
+  const totBB={};BREADS.forEach(b=>{totBB[b]={Kis:0,Nagy:0};});
+  orders.forEach(o=>o.items.forEach(i=>{totBB[i.bread][i.size]=(totBB[i.bread][i.size]||0)+i.qty;}));
 
-  const totalByBread={};
-  BREADS.forEach(b=>{ totalByBread[b]={Kis:0,Nagy:0}; });
-  orders.forEach(o=>o.items.forEach(i=>{ totalByBread[i.bread][i.size]=(totalByBread[i.bread][i.size]||0)+i.qty; }));
-
-  let html = `<div class="summary-total">Összesen leadott: <strong>${totalAll} db</strong></div>`;
-
+  let html=`<div style="background:rgba(255,255,255,.75);border-radius:10px;padding:11px 14px;margin-bottom:11px;font-family:sans-serif;font-size:13px;color:#7a5a3a;border:1px solid rgba(200,149,107,.2)">Összesen leadott: <strong>${tot} db</strong></div>`;
   DAY_KEYS.forEach((dk,di)=>{
-    const dayData = BREADS.map(b=>({bread:b,...byDay[dk][b]})).filter(x=>x.Kis>0||x.Nagy>0);
-    if (!dayData.length) return;
-    const dayTotal = dayData.reduce((a,x)=>a+x.Kis+x.Nagy,0);
-    html += `<div class="summary-card">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-        <span style="font-family:sans-serif;font-weight:700;font-size:14px;color:#5c3a1e">${DAYS[di].toUpperCase()}</span>
-        <span style="background:#a0714a;color:#fff;border-radius:10px;padding:2px 9px;font-family:sans-serif;font-size:12px;font-weight:700">${dayTotal} db</span>
-      </div>`
-      + dayData.map(({bread,Kis,Nagy})=>`<div class="summary-row">
-          <span>${escHtml(bread)}</span>
-          <span class="summary-qty">${Kis>0?`<span style="font-size:11px;color:#7a5a3a">kis:</span> ${Kis}`:''} ${Nagy>0?`<span style="font-size:11px;color:#7a5a3a">nagy:</span> ${Nagy}`:''}</span>
-        </div>`).join('')
-      + '</div>';
+    const dd=BREADS.map(b=>({b,K:byDay[dk][b].Kis,N:byDay[dk][b].Nagy})).filter(x=>x.K||x.N);
+    if(!dd.length)return;
+    const dt=dd.reduce((a,x)=>a+x.K+x.N,0);
+    html+=`<div class="sum-card"><div style="display:flex;justify-content:space-between;margin-bottom:7px"><span style="font-family:sans-serif;font-weight:700;font-size:13px;color:#5c3a1e">${DAYS[di].toUpperCase()}</span><span style="background:#a0714a;color:#fff;border-radius:9px;padding:2px 9px;font-family:sans-serif;font-size:12px;font-weight:700">${dt} db</span></div>`
+      +dd.map(({b,K,N})=>`<div class="sum-row"><span>${esc(b)}</span><span class="sum-qty">${K?`kis: ${K} `:''}${N?`nagy: ${N}`:''}` ).join('')+'</div></div>';
   });
-
-  const weekData = BREADS.map(b=>({bread:b,...totalByBread[b]})).filter(x=>x.Kis>0||x.Nagy>0);
-  if (weekData.length) {
-    html += `<div class="summary-card"><div style="font-family:sans-serif;font-weight:700;font-size:14px;color:#5c3a1e;margin-bottom:8px">HETI ÖSSZESÍTŐ</div>`
-      + weekData.map(({bread,Kis,Nagy})=>`<div class="summary-row"><span>${escHtml(bread)}</span><span class="summary-qty">${Kis>0?`<span style="font-size:11px;color:#7a5a3a">kis:</span> ${Kis}`:''} ${Nagy>0?`<span style="font-size:11px;color:#7a5a3a">nagy:</span> ${Nagy}`:''}</span></div>`).join('')
-      + '</div>';
+  const wd=BREADS.map(b=>({b,...totBB[b]})).filter(x=>x.Kis||x.Nagy);
+  if(wd.length){
+    html+=`<div class="sum-card"><div style="font-family:sans-serif;font-weight:700;font-size:13px;color:#5c3a1e;margin-bottom:7px">HETI ÖSSZESÍTŐ</div>`
+      +wd.map(({b,Kis,Nagy})=>`<div class="sum-row"><span>${esc(b)}</span><span class="sum-qty">${Kis?`kis: ${Kis} `:''}${Nagy?`nagy: ${Nagy}`:''}</span></div>`).join('')+'</div>';
   }
-
-  el.innerHTML = html;
+  el.innerHTML=html;
 }
 
-function renderAdminBoard() {
-  const el = document.getElementById('admin-board');
-  if (!el) return;
-  const msgsHtml = messages.length===0
-    ? '<div class="empty">Még nincs üzenet</div>'
-    : messages.map(m=>`<div class="board-admin-row">
-        <div style="flex:1">
-          <div class="board-msg-text">${escHtml(m.text)}</div>
-          <div class="board-msg-date">${m.date}</div>
-        </div>
-        <button class="delete-btn" onclick="deleteMessage(${m.id})">Törlés</button>
-      </div>`).join('');
-  el.innerHTML = `<div class="card">
-    <div class="card-title">ÚJ ÜZENET</div>
-    <textarea id="new-msg-input" rows="4" placeholder="Írj üzenetet a rendelőknek..."></textarea>
-    <button class="sec-btn" onclick="postMessage()">Közzétesz →</button>
-  </div>${msgsHtml}`;
+function renderAdminBoard(){
+  const el=document.getElementById('admin-board');if(!el)return;
+  const mh=!messages.length?'<div class="empty">Még nincs üzenet</div>'
+    :messages.map(m=>`<div class="board-admin-row"><div style="flex:1"><div class="board-msg-text">${esc(m.text)}</div><div class="board-msg-date">${m.date}</div></div><button class="del-btn" onclick="delMsg(${m.id})">Törlés</button></div>`).join('');
+  el.innerHTML=`<div class="card"><div class="card-title">ÚJ ÜZENET</div><textarea id="nmi" rows="4" placeholder="Írj üzenetet a rendelőknek..."></textarea><button class="sec-btn" onclick="postMsg()">Közzétesz →</button></div>${mh}`;
 }
 
-function postMessage() {
-  const input = document.getElementById('new-msg-input');
-  const text  = input.value.trim();
-  if (!text) return;
-  messages.unshift({ id:Date.now(), text, date:new Date().toLocaleDateString("hu-HU",{month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"}) });
-  save(); renderAdminBoard(); renderBoard();
+function postMsg(){
+  const t=document.getElementById('nmi').value.trim();if(!t)return;
+  messages.unshift({id:Date.now(),text:t,date:new Date().toLocaleDateString("hu-HU",{month:"long",day:"numeric",hour:"2-digit",minute:"2-digit"})});
+  save();renderAdminBoard();renderBoard();
 }
-
-function deleteMessage(id) {
-  messages = messages.filter(m=>m.id!==id);
-  save(); renderAdminBoard(); renderBoard();
-}
+function delMsg(id){messages=messages.filter(m=>m.id!==id);save();renderAdminBoard();renderBoard();}
 
 // ── Init ──
 buildDayBlocks();
